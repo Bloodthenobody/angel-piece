@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Guide — Angel Piece</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Georgia,"Times New Roman",serif;
+color:#26384a;
+background:linear-gradient(180deg,#79b0d8,#d9edf4 45%,#f2eadc);
+min-height:100vh
+}
+a{text-decoration:none;color:inherit}
+.top{
+position:sticky;top:14px;z-index:10;
+width:min(1150px,92%);margin:14px auto;
+background:rgba(255,255,255,.96);
+border-radius:16px;padding:14px 20px;
+box-shadow:0 10px 30px rgba(40,69,90,.15);
+display:flex;align-items:center;gap:20px
+}
+.logo{font-size:22px;font-weight:bold;color:#39536d;white-space:nowrap}
+.logo span{
+display:inline-grid;place-items:center;width:30px;height:30px;
+border:2px solid #86a5bd;border-radius:50%
+}
+nav{display:flex;gap:4px;justify-content:center;flex:1;flex-wrap:wrap}
+nav a{padding:9px 11px;border-radius:9px;font-weight:bold;color:#46586b}
+nav a:hover,nav a.active{background:#f0f5f8}
+.menu{display:none;border:0;background:none;font-size:24px}
+main{width:min(1100px,92%);margin:auto}
+.hero{text-align:center;padding:75px 20px 45px}
+.kicker{font-weight:bold;letter-spacing:4px;color:#637d94;font-size:13px}
+.hero h1{font-size:68px;margin:10px 0;color:#304b63;font-style:italic}
+.hero p{max-width:800px;margin:auto;font-size:19px;line-height:1.6;color:#5e7181}
+.section{
+background:rgba(255,255,255,.95);
+border-radius:18px;padding:42px;margin-bottom:35px;
+box-shadow:0 14px 35px rgba(41,70,91,.1)
+}
+.heading{text-align:center;margin-bottom:28px}
+.heading small{letter-spacing:4px;color:#7890a5;font-weight:bold}
+.heading h2{font-size:40px;margin:8px 0;color:#354d64;font-style:italic}
+.heading p{color:#687988;font-size:18px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{
+background:#f8fafb;border:1px solid #dce4e8;
+border-radius:13px;padding:23px
+}
+.icon{text-align:center;font-size:42px}
+.card h3{text-align:center;color:#405f79}
+.card p{color:#71808c;line-height:1.6}
+.tip{
+margin-top:18px;padding:18px;background:#edf5f8;
+border-left:5px solid #6d92aa;border-radius:9px;
+line-height:1.7;color:#526777
+}
+.step{
+display:grid;grid-template-columns:50px 1fr;
+gap:15px;align-items:start;
+padding:18px 0;border-bottom:1px solid #dce4e8
+}
+.step:last-child{border-bottom:0}
+.num{
+display:grid;place-items:center;width:42px;height:42px;
+border-radius:50%;background:#e6eef2;color:#405f79;font-weight:bold
+}
+.step h3{margin:0;color:#405f79}
+.step p{margin:7px 0;color:#71808c;line-height:1.5}
+footer{
+margin-top:50px;padding:35px 7%;background:#263b4d;color:#d2dde5;
+display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap
+}
+footer .logo{color:white}
+@media(max-width:850px){
+nav{display:none;position:absolute;left:0;right:0;top:65px;background:white;border-radius:12px;padding:10px;flex-direction:column}
+nav.open{display:flex}
+.menu{display:block;margin-left:auto}
+.grid{grid-template-columns:1fr}
+.section{padding:30px 20px}
+.hero h1{font-size:52px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+<a class="logo" href="index.html"><span>✦</span> ANGEL PIECE</a>
+
+<nav id="nav">
+<a href="index.html">Home</a>
+<a href="shop.html">Shop</a>
+<a href="world.html">World</a>
+<a href="fruits.html">Angel Fruits</a>
+<a href="weapons.html">Weapons</a>
+<a href="guns.html">Guns</a>
+<a href="boats.html">Boats</a>
+<a href="enemies.html">Enemies</a>
+<a href="bosses.html">Bosses</a>
+<a href="sea-beasts.html">Sea Beasts</a>
+<a href="factions.html">Factions</a>
+<a href="pets.html">Pets</a>
+<a href="islands.html">Islands</a>
+<a href="species.html">Species</a>
+<a href="abilities.html">Abilities</a>
+<a href="rebirth.html">Rebirth</a>
+<a href="guide.html" class="active">Guide</a>
+<a href="store.html">Official Store</a>
+<a href="codes.html">Codes</a>
+<a href="community.html">Community</a>
+</nav>
+
+<button class="menu" onclick="toggleMenu()">☰</button>
+</header>
+
+<main>
+
+<section class="hero">
+<div class="kicker">WELCOME TO ANGEL PIECE</div>
+<h1>Game Guide</h1>
+<p>
+Everything you need to know before starting your
+journey across the five Seas.
+</p>
+</section>
+
+<section class="section">
+
+<div class="heading">
+<small>START HERE</small>
+<h2>How to Begin</h2>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">💰</div>
+<h3>Cappies</h3>
+<p>
+Cappies are the main currency. Use them to buy
+weapons, Angel Fruits, pets and other items.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">⚔️</div>
+<h3>Choose Your Gear</h3>
+<p>
+Start by choosing your preferred combat style,
+weapon or Angel Fruit.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🗺️</div>
+<h3>Explore</h3>
+<p>
+Travel between islands, complete quests and
+discover new areas.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="heading">
+<small>YOUR JOURNEY</small>
+<h2>Progression</h2>
+</div>
+
+<div class="step">
+<div class="num">1</div>
+<div>
+<h3>Complete Quests</h3>
+<p>Defeat enemies and complete quests to gain experience and Cappies.</p>
+</div>
+</div>
+
+<div class="step">
+<div class="num">2</div>
+<div>
+<h3>Upgrade Your Character</h3>
+<p>Improve your combat abilities, weapons, Angel Fruits and Species.</p>
+</div>
+</div>
+
+<div class="step">
+<div class="num">3</div>
+<div>
+<h3>Explore New Islands</h3>
+<p>Reach the required levels to access stronger islands and Seas.</p>
+</div>
+</div>
+
+<div class="step">
+<div class="num">4</div>
+<div>
+<h3>Fight Bosses</h3>
+<p>Powerful bosses provide better rewards and rare items.</p>
+</div>
+</div>
+
+<div class="step">
+<div class="num">5</div>
+<div>
+<h3>Enter the Celestial Realm</h3>
+<p>Reach the highest progression and begin your Rebirth journey.</p>
+</div>
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="heading">
+<small>CORE SYSTEMS</small>
+<h2>Important Systems</h2>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">🍎</div>
+<h3>Angel Fruits</h3>
+<p>
+Special powers with rarities, awakenings and
+advanced Ascensions.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">😇</div>
+<h3>Species</h3>
+<p>
+Choose between Angel and Demon Species with
+different passive bonuses.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">⚡</div>
+<h3>Abilities</h3>
+<p>
+Use combat abilities, Haki and special skills
+to become stronger.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🐾</div>
+<h3>Pets</h3>
+<p>
+Collect pets that can provide bonuses and
+special effects.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🚢</div>
+<h3>Boats</h3>
+<p>
+Use boats to travel between islands and
+encounter creatures at sea.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">♻️</div>
+<h3>Rebirth</h3>
+<p>
+Reset your progression cycle in exchange
+for permanent power.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="tip">
+💡 <strong>Beginner Tip:</strong>
+Don't spend all your Cappies immediately.
+Upgrade your combat setup first and save enough
+currency for important upgrades and travel.
+</div>
+
+<div class="tip">
+🌊 <strong>Explorer Tip:</strong>
+Not every secret location is visible from the main
+path. Explore islands carefully.
+</div>
+
+<div class="tip">
+👑 <strong>Boss Tip:</strong>
+If a boss is too strong, return later with better
+equipment, abilities or a stronger Species.
+</div>
+
+</section>
+
+</main>
+
+<footer>
+<div class="logo">✦ ANGEL PIECE</div>
+<div>
+<a href="index.html">Home</a> ·
+<a href="species.html">Species</a> ·
+<a href="abilities.html">Abilities</a> ·
+<a href="rebirth.html">Rebirth</a> ·
+<a href="community.html">Community</a>
+</div>
+</footer>
+
+<script>
+function toggleMenu(){
+document.getElementById("nav").classList.toggle("open");
+}
+</script>
+
+</body>
+</html>
