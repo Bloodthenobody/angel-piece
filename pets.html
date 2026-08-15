@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pets — Angel Piece</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            color: #26384a;
+            background: linear-gradient(
+                180deg,
+                #79b0d8 0%,
+                #d9edf4 45%,
+                #f2eadc 100%
+            );
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .top {
+            position: sticky;
+            top: 14px;
+            z-index: 100;
+
+            width: min(1150px, 92%);
+            margin: 14px auto;
+
+            background: rgba(255,255,255,0.96);
+            border-radius: 16px;
+
+            padding: 14px 20px;
+
+            box-shadow: 0 10px 30px rgba(40,69,90,0.15);
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #39536d;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            display: inline-grid;
+            place-items: center;
+
+            width: 30px;
+            height: 30px;
+
+            border: 2px solid #86a5bd;
+            border-radius: 50%;
+        }
+
+        nav {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            padding: 9px 11px;
+            border-radius: 9px;
+
+            font-weight: bold;
+            color: #46586b;
+
+            transition: 0.2s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #f0f5f8;
+        }
+
+        .menu {
+            display: none;
+
+            border: 0;
+            background: transparent;
+
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        main {
+            width: min(1150px, 92%);
+            margin: auto;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 70px 20px 45px;
+        }
+
+        .kicker {
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #637d94;
+            font-size: 13px;
+        }
+
+        .hero h1 {
+            font-size: 68px;
+            margin: 10px 0;
+
+            color: #304b63;
+            font-style: italic;
+
+            text-shadow: 2px 3px rgba(255,255,255,0.55);
+        }
+
+        .hero p {
+            max-width: 820px;
+            margin: auto;
+
+            font-size: 19px;
+            line-height: 1.6;
+
+            color: #5e7181;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.95);
+
+            border-radius: 18px;
+
+            padding: 42px;
+
+            margin-bottom: 35px;
+
+            box-shadow: 0 14px 35px rgba(41,70,91,0.10);
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .heading small {
+            letter-spacing: 4px;
+            color: #7890a5;
+            font-weight: bold;
+        }
+
+        .heading h2 {
+            font-size: 40px;
+            margin: 8px 0;
+
+            color: #354d64;
+            font-style: italic;
+        }
+
+        .heading p {
+            color: #687988;
+            font-size: 18px;
+        }
+
+        /* SEARCH */
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+
+            margin-bottom: 28px;
+        }
+
+        .search {
+            flex: 1;
+            min-width: 220px;
+
+            padding: 14px 16px;
+
+            border: 1px solid #d5e0e6;
+            border-radius: 10px;
+
+            background: white;
+
+            font-size: 15px;
+            font-family: inherit;
+
+            outline: none;
+        }
+
+        .search:focus {
+            border-color: #8ba9bc;
+        }
+
+        .filter {
+            padding: 14px 16px;
+
+            border: 1px solid #d5e0e6;
+            border-radius: 10px;
+
+            background: white;
+
+            color: #526777;
+
+            font-family: inherit;
+
+            cursor: pointer;
+        }
+
+        /* PET CARDS */
+
+        .pet-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .pet-card {
+            background: #f7fafb;
+
+            border: 1px solid #dce4e8;
+
+            border-radius: 14px;
+
+            padding: 24px;
+
+            transition: 0.2s;
+        }
+
+        .pet-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 12px 28px rgba(40,69,90,0.13);
+        }
+
+        .pet-icon {
+            font-size: 58px;
+
+            text-align: center;
+
+            margin-bottom: 8px;
+        }
+
+        .pet-card h3 {
+            margin: 8px 0;
+
+            text-align: center;
+
+            font-size: 25px;
+
+            color: #405f79;
+        }
+
+        .description {
+            color: #71808c;
+
+            line-height: 1.5;
+
+            font-size: 14px;
+
+            min-height: 65px;
+        }
+
+        .tags {
+            text-align: center;
+
+            margin: 12px 0;
+        }
+
+        .tag {
+            display: inline-block;
+
+            padding: 6px 9px;
+
+            margin: 3px;
+
+            border-radius: 7px;
+
+            background: #e6eef2;
+
+            color: #526b7d;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .stats {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 8px;
+
+            margin-top: 14px;
+        }
+
+        .stat {
+            padding: 10px;
+
+            background: white;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            border: 1px solid #e0e7ea;
+        }
+
+        .stat strong {
+            display: block;
+
+            color: #405f79;
+
+            font-size: 14px;
+        }
+
+        .stat span {
+            color: #7b8993;
+
+            font-size: 11px;
+        }
+
+        .ability {
+            margin-top: 12px;
+
+            padding: 11px;
+
+            background: #edf4f7;
+
+            border-radius: 8px;
+
+            color: #526777;
+
+            font-size: 13px;
+
+            line-height: 1.4;
+        }
+
+        .price {
+            margin-top: 12px;
+
+            padding: 10px;
+
+            background: white;
+
+            border-radius: 8px;
+
+            border: 1px solid #dce4e8;
+
+            text-align: center;
+
+            color: #405f79;
+
+            font-weight: bold;
+        }
+
+        .faction {
+            margin-top: 8px;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            color: #657c8e;
+        }
+
+        /* INFO BOX */
+
+        .info-box {
+            padding: 22px;
+
+            background: #edf5f8;
+
+            border-left: 5px solid #6d92aa;
+
+            border-radius: 9px;
+
+            color: #526777;
+
+            line-height: 1.7;
+
+            margin-bottom: 25px;
+        }
+
+        .chance-box {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 18px;
+
+            margin-top: 20px;
+        }
+
+        .chance-card {
+            padding: 22px;
+
+            background: #f7fafb;
+
+            border: 1px solid #dce4e8;
+
+            border-radius: 12px;
+        }
+
+        .chance-card h3 {
+            margin-top: 0;
+
+            color: #405f79;
+        }
+
+        .chance-number {
+            font-size: 32px;
+
+            font-weight: bold;
+
+            color: #526f86;
+
+            margin: 10px 0;
+        }
+
+        /* RARITIES */
+
+        .rarity-grid {
+            display: grid;
+
+            grid-template-columns: repeat(5, 1fr);
+
+            gap: 12px;
+        }
+
+        .rarity {
+            padding: 18px;
+
+            background: #f7fafb;
+
+            border: 1px solid #dce4e8;
+
+            border-radius: 10px;
+
+            text-align: center;
+        }
+
+        .rarity strong {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: #405f79;
+        }
+
+        .rarity span {
+            color: #788793;
+
+            font-size: 13px;
+        }
+
+        /* PET DATABASE */
+
+        .database-note {
+            margin-top: 20px;
+
+            padding: 18px;
+
+            background: #f1f3f4;
+
+            border-radius: 9px;
+
+            color: #61717d;
+
+            line-height: 1.6;
+        }
+
+        footer {
+            margin-top: 50px;
+
+            padding: 35px 7%;
+
+            background: #263b4d;
+
+            color: #d2dde5;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        footer .logo {
+            color: white;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 1000px) {
+            .pet-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .rarity-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 850px) {
+
+            nav {
+                display: none;
+
+                position: absolute;
+
+                left: 0;
+                right: 0;
+
+                top: 65px;
+
+                background: white;
+
+                border-radius: 12px;
+
+                padding: 10px;
+
+                flex-direction: column;
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .menu {
+                display: block;
+
+                margin-left: auto;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+
+            .hero h1 {
+                font-size: 52px;
+            }
+
+            .pet-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chance-box {
+                grid-template-columns: 1fr;
+            }
+
+            .rarity-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            footer {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .rarity-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="top">
+
+    <a class="logo" href="index.html">
+        <span>✦</span>
+        ANGEL PIECE
+    </a>
+
+    <nav id="nav">
+
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="world.html">Island & Bosses</a>
+        <a href="fruits.html">Angel Fruits</a>
+        <a href="weapons.html">Weapons</a>
+        <a href="guns.html">Guns</a>
+        <a href="boats.html">Boats</a>
+        <a href="enemies.html">Enemies</a>
+        <a href="bosses.html">Bosses</a>
+        <a href="sea-beasts.html">Sea Beasts</a>
+        <a href="factions.html">Factions</a>
+        <a href="pets.html" class="active">Pets</a>
+        <a href="store.html">Official Store</a>
+        <a href="codes.html">Official Codes</a>
+        <a href="community.html">Community</a>
+
+    </nav>
+
+    <button class="menu" onclick="toggleMenu()">
+        ☰
+    </button>
+
+</header>
+
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="kicker">
+        ANGEL PIECE PET DATABASE
+    </div>
+
+    <h1>
+        Pets
+    </h1>
+
+    <p>
+        Collect loyal companions from across the
+        world of Angel Piece. Choose between
+        Neutral, Angel and Demon pets.
+    </p>
+
+</section>
+
+
+<!-- INTRO -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            PET SYSTEM
+        </small>
+
+        <h2>
+            Build Your Pet Collection
+        </h2>
+
+        <p>
+            Every pet has its own rarity, bonus and
+            special ability.
+        </p>
+
+    </div>
+
+    <div class="info-box">
+
+        🐾 <strong>Pets can help your adventure.</strong>
+
+        <br><br>
+
+        Pets can provide bonuses such as movement
+        speed, damage, defense, healing or other
+        special effects.
+
+        <br><br>
+
+        There are three main pet groups:
+
+        <br><br>
+
+        🐾 <strong>Neutral Pets</strong> — available to
+        both factions.
+
+        <br>
+
+        😇 <strong>Angel Pets</strong> — connected to
+        the Angel faction.
+
+        <br>
+
+        😈 <strong>Demon Pets</strong> — connected to
+        the Demon faction.
+
+    </div>
+
+</section>
+
+
+<!-- SEARCH -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            PET DATABASE
+        </small>
+
+        <h2>
+            Find a Pet
+        </h2>
+
+        <p>
+            Search the collection or filter it by faction.
+        </p>
+
+    </div>
+
+    <div class="controls">
+
+        <input
+            id="search"
+            class="search"
+            type="text"
+            placeholder="Search pets..."
+            oninput="filterPets()"
+        >
+
+        <select
+            id="factionFilter"
+            class="filter"
+            onchange="filterPets()"
+        >
+
+            <option value="all">
+                All Factions
+            </option>
+
+            <option value="neutral">
+                Neutral
+            </option>
+
+            <option value="angel">
+                Angel
+            </option>
+
+            <option value="demon">
+                Demon
+            </option>
+
+        </select>
+
+        <select
+            id="rarityFilter"
+            class="filter"
+            onchange="filterPets()"
+        >
+
+            <option value="all">
+                All Rarities
+            </option>
+
+            <option value="common">
+                Common
+            </option>
+
+            <option value="rare">
+                Rare
+            </option>
+
+            <option value="epic">
+                Epic
+            </option>
+
+            <option value="legendary">
+                Legendary
+            </option>
+
+            <option value="mythical">
+                Mythical
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div id="petGrid" class="pet-grid">
+
+
+        <!-- NEUTRAL PETS -->
+
+
+        <article
+            class="pet-card"
+            data-name="pet dog"
+            data-faction="neutral"
+            data-rarity="common"
+        >
+
+            <div class="pet-icon">🐶</div>
+
+            <h3>Pet Dog</h3>
+
+            <div class="tags">
+                <span class="tag">Common</span>
+                <span class="tag">Neutral</span>
+            </div>
+
+            <p class="description">
+                A loyal companion that gives a small
+                movement bonus.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 1</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+3%</strong>
+                    <span>Speed</span>
+                </div>
+
+                <div class="stat">
+                    <strong>100</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>500</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🐾 Ability: Loyal Companion
+            </div>
+
+            <div class="price">
+                💰 500 Cappies
+            </div>
+
+            <div class="faction">
+                Available to: Everyone
+            </div>
+
+        </article>
+
+
+        <article
+            class="pet-card"
+            data-name="pet cat"
+            data-faction="neutral"
+            data-rarity="common"
+        >
+
+            <div class="pet-icon">🐱</div>
+
+            <h3>Pet Cat</h3>
+
+            <div class="tags">
+                <span class="tag">Common</span>
+                <span class="tag">Neutral</span>
+            </div>
+
+            <p class="description">
+                A clever companion with a small
+                energy recovery bonus.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 1</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+3%</strong>
+                    <span>Energy</span>
+                </div>
+
+                <div class="stat">
+                    <strong>100</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>500</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🐾 Ability: Quick Recovery
+            </div>
+
+            <div class="price">
+                💰 500 Cappies
+            </div>
+
+            <div class="faction">
+                Available to: Everyone
+            </div>
+
+        </article>
+
+
+        <article
+            class="pet-card"
+            data-name="little fox"
+            data-faction="neutral"
+            data-rarity="rare"
+        >
+
+            <div class="pet-icon">🦊</div>
+
+            <h3>Little Fox</h3>
+
+            <div class="tags">
+                <span class="tag">Rare</span>
+                <span class="tag">Neutral</span>
+            </div>
+
+            <p class="description">
+                A fast fox that helps its owner move
+                through the world more efficiently.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 10</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+6%</strong>
+                    <span>Speed</span>
+                </div>
+
+                <div class="stat">
+                    <strong>250</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>2,500</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🦊 Ability: Swift Step
+            </div>
+
+            <div class="price">
+                💰 2,500 Cappies
+            </div>
+
+            <div class="faction">
+                Available to: Everyone
+            </div>
+
+        </article>
+
+
+        <!-- ANGEL PETS -->
+
+
+        <article
+            class="pet-card"
+            data-name="angel dog"
+            data-faction="angel"
+            data-rarity="rare"
+        >
+
+            <div class="pet-icon">😇🐶</div>
+
+            <h3>Angel Dog</h3>
+
+            <div class="tags">
+                <span class="tag">Rare</span>
+                <span class="tag">Angel</span>
+            </div>
+
+            <p class="description">
+                A blessed companion that gives its
+                Angel master a small defense bonus.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 25</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+7%</strong>
+                    <span>Defense</span>
+                </div>
+
+                <div class="stat">
+                    <strong>500</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>5,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                ✨ Ability: Holy Guard
+            </div>
+
+            <div class="price">
+                💰 5,000 Cappies
+            </div>
+
+            <div class="faction">
+                Available to: Angels
+            </div>
+
+        </article>
+
+
+        <article
+            class="pet-card"
+            data-name="angel cat"
+            data-faction="angel"
+            data-rarity="rare"
+        >
+
+            <div class="pet-icon">😇🐱</div>
+
+            <h3>Angel Cat</h3>
+
+            <div class="tags">
+                <span class="tag">Rare</span>
+                <span class="tag">Angel</span>
+            </div>
+
+            <p class="description">
+                A heavenly cat that slowly restores
+                its master's energy.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 25</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+8%</strong>
+                    <span>Energy</span>
+                </div>
+
+                <div class="stat">
+                    <strong>500</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>5,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                ✨ Ability: Heavenly Recovery
+            </div>
+
+            <div class="price">
+                💰 5,000 Cappies
+            </div>
+
+            <div class="faction">
+                Available to: Angels
+            </div>
+
+        </article>
+
+
+        <article
+            class="pet-card"
+            data-name="celestial wolf"
+            data-faction="angel"
+            data-rarity="legendary"
+        >
+
+            <div class="pet-icon">🐺✨</div>
+
+            <h3>Celestial Wolf</h3>
+
+            <div class="tags">
+                <span class="tag">Legendary</span>
+                <span class="tag">Angel</span>
+            </div>
+
+            <p class="description">
+                A powerful celestial wolf connected
+                to the Angelic Wolf species.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 100</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+15%</strong>
+                    <span>Speed</span>
+                </div>
+
+                <div class="stat">
+                    <strong>2,500</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>75,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🐺 Ability: Celestial Howl
+            </div>
+
+            <div class="price">
+                💰 75,000 Cappies
+            </div>
+
+            <div class="faction">
+                Linked Species: Angelic Wolf
+            </div>
+
+        </article>
+
+
+        <article
+            class="pet-card"
+            data-name="divine bird"
+            data-faction="angel"
+            data-rarity="legendary"
+        >
+
+            <div class="pet-icon">🪽🦅</div>
+
+            <h3>Divine Bird</h3>
+
+            <div class="tags">
+                <span class="tag">Legendary</span>
+                <span class="tag">Angel</span>
+            </div>
+
+            <p class="description">
+                A divine flying companion that improves
+                aerial movement.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 150</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+12%</strong>
+                    <span>Air Speed</span>
+                </div>
+
+                <div class="stat">
+                    <strong>3,000</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>100,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🪽 Ability: Divine Glide
+            </div>
+
+            <div class="price">
+                💰 100,000 Cappies
+            </div>
+
+            <div class="faction">
+                Linked Species: Celestial Wing
+            </div>
+
+        </article>
+
+
+        <article
+            class="pet-card"
+            data-name="light deer"
+            data-faction="angel"
+            data-rarity="epic"
+        >
+
+            <div class="pet-icon">🦌✨</div>
+
+            <h3>Light Deer</h3>
+
+            <div class="tags">
+                <span class="tag">Epic</span>
+                <span class="tag">Angel</span>
+            </div>
+
+            <p class="description">
+                A peaceful guardian capable of
+                restoring a small amount of health.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 125</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+8%</strong>
+                    <span>Healing</span>
+                </div>
+
+                <div class="stat">
+                    <strong>2,000</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>50,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                ✨ Ability: Light Mend
+            </div>
+
+            <div class="price">
+                💰 50,000 Cappies
+            </div>
+
+            <div class="faction">
+                Linked Species: Holy Deer
+            </div>
+
+        </article>
+
+
+        <article
+            class="pet-card"
+            data-name="divine dragon"
+            data-faction="angel"
+            data-rarity="mythical"
+        >
+
+            <div class="pet-icon">🐉✨</div>
+
+            <h3>Divine Dragon</h3>
+
+            <div class="tags">
+                <span class="tag">Mythical</span>
+                <span class="tag">Angel</span>
+            </div>
+
+            <p class="description">
+                An ancient celestial dragon with
+                incredible defensive power.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 500</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+20%</strong>
+                    <span>Defense</span>
+                </div>
+
+                <div class="stat">
+                    <strong>10,000</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>1,000,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🌟 Ability: Celestial Shield
+            </div>
+
+            <div class="price">
+                💰 1,000,000 Cappies
+            </div>
+
+            <div class="faction">
+                Linked Species: Divine Dragon
+            </div>
+
+        </article>
+
+
+        <!-- DEMON PETS -->
+
+
+        <article
+            class="pet-card"
+            data-name="demon dog"
+            data-faction="demon"
+            data-rarity="rare"
+        >
+
+            <div class="pet-icon">😈🐶</div>
+
+            <h3>Demon Dog</h3>
+
+            <div class="tags">
+                <span class="tag">Rare</span>
+                <span class="tag">Demon</span>
+            </div>
+
+            <p class="description">
+                A dark companion that increases
+                the damage of its Demon master.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 25</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+7%</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>500</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>5,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🔥 Ability: Dark Bite
+            </div>
+
+            <div class="price">
+                💰 5,000 Cappies
+            </div>
+
+            <div class="faction">
+                Available to: Demons
+            </div>
+
+        </article>
+
+
+        <article
+            class="pet-card"
+            data-name="demon cat"
+            data-faction="demon"
+            data-rarity="rare"
+        >
+
+            <div class="pet-icon">😈🐱</div>
+
+            <h3>Demon Cat</h3>
+
+            <div class="tags">
+                <span class="tag">Rare</span>
+                <span class="tag">Demon</span>
+            </div>
+
+            <p class="description">
+                A mysterious cat that improves dark
+                energy recovery.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 25</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+8%</strong>
+                    <span>Energy</span>
+                </div>
+
+                <div class="stat">
+                    <strong>500</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>5,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🌑 Ability: Dark Recovery
+            </div>
+
+            <div class="price">
+                💰 5,000 Cappies
+            </div>
+
+            <div class="faction">
+                Available to: Demons
+            </div>
+
+        </article>
+
+
+        <article
+            class="pet-card"
+            data-name="shadow wolf"
+            data-faction="demon"
+            data-rarity="legendary"
+        >
+
+            <div class="pet-icon">🐺🌑</div>
+
+            <h3>Shadow Wolf</h3>
+
+            <div class="tags">
+                <span class="tag">Legendary</span>
+                <span class="tag">Demon</span>
+            </div>
+
+            <p class="description">
+                A shadow beast linked to the Shadow
+                Wolf species.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 100</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+15%</strong>
+                    <span>Speed</span>
+                </div>
+
+                <div class="stat">
+                    <strong>2,500</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>75,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🌑 Ability: Shadow Dash
+            </div>
+
+            <div class="price">
+                💰 75,000 Cappies
+            </div>
+
+            <div class="faction">
+                Linked Species: Shadow Wolf
+            </div>
+
+        </article>
+
+
+        <article
+            class="pet-card"
+            data-name="infernal bat"
+            data-faction="demon"
+            data-rarity="epic"
+        >
+
+            <div class="pet-icon">🦇🔥</div>
+
+            <h3>Infernal Bat</h3>
+
+            <div class="tags">
+                <span class="tag">Epic</span>
+                <span class="tag">Demon</span>
+            </div>
+
+            <p class="description">
+                A flying demon pet that improves
+                aerial movement and dark attacks.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 125</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+12%</strong>
+                    <span>Air Speed</span>
+                </div>
+
+                <div class="stat">
+                    <strong>2,000</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>50,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🔥 Ability: Infernal Dive
+            </div>
+
+            <div class="price">
+                💰 50,000 Cappies
+            </div>
+
+            <div class="faction">
+                Linked Species: Infernal Bat
+            </div>
+
+        </article>
+
+
+        <article
+            class="pet-card"
+            data-name="abyss serpent"
+            data-faction="demon"
+            data-rarity="legendary"
+        >
+
+            <div class="pet-icon">🐍🌑</div>
+
+            <h3>Abyss Serpent</h3>
+
+            <div class="tags">
+                <span class="tag">Legendary</span>
+                <span class="tag">Demon</span>
+            </div>
+
+            <p class="description">
+                A poisonous creature born from the
+                deepest part of the abyss.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 250</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+18%</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>5,000</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>250,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                ☠️ Ability: Abyss Poison
+            </div>
+
+            <div class="price">
+                💰 250,000 Cappies
+            </div>
+
+            <div class="faction">
+                Linked Species: Abyss Serpent
+            </div>
+
+        </article>
+
+
+        <article
+            class="pet-card"
+            data-name="infernal dragon"
+            data-faction="demon"
+            data-rarity="mythical"
+        >
+
+            <div class="pet-icon">🐲🔥</div>
+
+            <h3>Infernal Dragon</h3>
+
+            <div class="tags">
+                <span class="tag">Mythical</span>
+                <span class="tag">Demon</span>
+            </div>
+
+            <p class="description">
+                A legendary demon dragon connected
+                to the Demonic Dragon species.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 500</strong>
+                    <span>Start Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>+25%</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>10,000</strong>
+                    <span>Pet HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>1,000,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🌋 Ability: Infernal Breath
+            </div>
+
+            <div class="price">
+                💰 1,000,000 Cappies
+            </div>
+
+            <div class="faction">
+                Linked Species: Demonic Dragon
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <div id="noResults" class="database-note hidden">
+        🔎 No pets found. Try another search or filter.
+    </div>
+
+</section>
+
+
+<!-- 50% SYSTEM -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            SPECIES REWARD
+        </small>
+
+        <h2>
+            50% Free Pet Chance
+        </h2>
+
+        <p>
+            Changing your species can give you a
+            special companion.
+        </p>
+
+    </div>
+
+
+    <div class="chance-box">
+
+        <div class="chance-card">
+
+            <h3>
+                😇 Angel Species
+            </h3>
+
+            <div class="chance-number">
+                50%
+            </div>
+
+            <p>
+                When an Angel player receives a new
+                species, they have a 50% chance to
+                receive a matching Angel Pet for free.
+            </p>
+
+            <p>
+                Example:
+                <strong>Angelic Wolf → Celestial Wolf</strong>
+            </p>
+
+        </div>
+
+
+        <div class="chance-card">
+
+            <h3>
+                😈 Demon Species
+            </h3>
+
+            <div class="chance-number">
+                50%
+            </div>
+
+            <p>
+                When a Demon player receives a new
+                species, they have a 50% chance to
+                receive a matching Demon Pet for free.
+            </p>
+
+            <p>
+                Example:
+                <strong>Demonic Dragon → Infernal Dragon</strong>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RARITIES -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            PET RARITIES
+        </small>
+
+        <h2>
+            Pet Rarity System
+        </h2>
+
+        <p>
+            The rarer the pet, the stronger and more
+            unusual its abilities can become.
+        </p>
+
+    </div>
+
+
+    <div class="rarity-grid">
+
+        <div class="rarity">
+            <strong>Common</strong>
+            <span>Basic companions</span>
+        </div>
+
+        <div class="rarity">
+            <strong>Rare</strong>
+            <span>Improved abilities</span>
+        </div>
+
+        <div class="rarity">
+            <strong>Epic</strong>
+            <span>Powerful bonuses</span>
+        </div>
+
+        <div class="rarity">
+            <strong>Legendary</strong>
+            <span>Very powerful pets</span>
+        </div>
+
+        <div class="rarity">
+            <strong>Mythical</strong>
+            <span>Extremely rare pets</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PET RULES -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            PET RULES
+        </small>
+
+        <h2>
+            How Pets Work
+        </h2>
+
+    </div>
+
+
+    <div class="info-box">
+
+        🐾 <strong>Neutral Pets</strong>
+
+        <br>
+
+        Can be used by both Angels and Demons.
+
+        <br><br>
+
+        😇 <strong>Angel Pets</strong>
+
+        <br>
+
+        Can normally be used by Angel players.
+
+        <br><br>
+
+        😈 <strong>Demon Pets</strong>
+
+        <br>
+
+        Can normally be used by Demon players.
+
+        <br><br>
+
+        🎁 <strong>Species Reward</strong>
+
+        <br>
+
+        Changing Species costs 10 Cappies and
+        gives a 50% chance to receive a matching
+        faction pet for free.
+
+        <br><br>
+
+        ⭐ <strong>Pet Growth</strong>
+
+        <br>
+
+        Pets can become stronger as their level
+        increases.
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="logo">
+        ✦ ANGEL PIECE
+    </div>
+
+    <div>
+
+        <a href="index.html">Home</a>
+        ·
+        <a href="shop.html">Shop</a>
+        ·
+        <a href="world.html">World</a>
+        ·
+        <a href="fruits.html">Angel Fruits</a>
+        ·
+        <a href="weapons.html">Weapons</a>
+        ·
+        <a href="guns.html">Guns</a>
+        ·
+        <a href="boats.html">Boats</a>
+        ·
+        <a href="enemies.html">Enemies</a>
+        ·
+        <a href="bosses.html">Bosses</a>
+        ·
+        <a href="sea-beasts.html">Sea Beasts</a>
+        ·
+        <a href="factions.html">Factions</a>
+        ·
+        <a href="pets.html">Pets</a>
+        ·
+        <a href="store.html">Store</a>
+        ·
+        <a href="codes.html">Codes</a>
+        ·
+        <a href="community.html">Community</a>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+function toggleMenu() {
+
+    document
+        .getElementById("nav")
+        .classList.toggle("open");
+
+}
+
+
+/* PET SEARCH + FILTER */
+
+function filterPets() {
+
+    const searchValue =
+        document
+            .getElementById("search")
+            .value
+            .toLowerCase();
+
+    const factionValue =
+        document
+            .getElementById("factionFilter")
+            .value;
+
+    const rarityValue =
+        document
+            .getElementById("rarityFilter")
+            .value;
+
+    const pets =
+        document.querySelectorAll(".pet-card");
+
+    let visiblePets = 0;
+
+    pets.forEach(function(pet) {
+
+        const name =
+            pet.dataset.name.toLowerCase();
+
+        const faction =
+            pet.dataset.faction;
+
+        const rarity =
+            pet.dataset.rarity;
+
+        const matchesSearch =
+            name.includes(searchValue);
+
+        const matchesFaction =
+            factionValue === "all" ||
+            faction === factionValue;
+
+        const matchesRarity =
+            rarityValue === "all" ||
+            rarity === rarityValue;
+
+        if (
+            matchesSearch &&
+            matchesFaction &&
+            matchesRarity
+        ) {
+
+            pet.classList.remove("hidden");
+
+            visiblePets++;
+
+        } else {
+
+            pet.classList.add("hidden");
+
+        }
+
+    });
+
+
+    const noResults =
+        document.getElementById("noResults");
+
+    if (visiblePets === 0) {
+
+        noResults.classList.remove("hidden");
+
+    } else {
+
+        noResults.classList.add("hidden");
+
+    }
+
+}
+
+
+/* MOBILE MENU */
+
+document
+    .querySelectorAll("nav a")
+    .forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function() {
+
+                document
+                    .getElementById("nav")
+                    .classList.remove("open");
+
+            }
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
