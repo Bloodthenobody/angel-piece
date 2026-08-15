@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Angel Piece — Official Website</title>
+
+    <meta name="description"
+          content="The official Angel Piece website. Explore the world, Angel Fruits, bosses, shop, official store and codes.">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            color: #26384a;
+            background:
+                linear-gradient(
+                    180deg,
+                    #79b0d8 0%,
+                    #d9edf4 45%,
+                    #f2eadc 100%
+                );
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* TOP NAVIGATION */
+
+        .top {
+            position: sticky;
+            top: 14px;
+            z-index: 100;
+
+            width: min(1120px, 92%);
+            margin: 14px auto;
+
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+
+            padding: 14px 20px;
+
+            box-shadow:
+                0 10px 30px rgba(40, 69, 90, 0.15);
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #39536d;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            display: inline-grid;
+            place-items: center;
+
+            width: 30px;
+            height: 30px;
+
+            border: 2px solid #86a5bd;
+            border-radius: 50%;
+        }
+
+        nav {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            flex: 1;
+        }
+
+        nav a {
+            padding: 11px 13px;
+            border-radius: 9px;
+
+            font-weight: bold;
+            color: #46586b;
+
+            transition: 0.2s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #f0f5f8;
+            transform: translateY(-1px);
+        }
+
+        .menu {
+            display: none;
+
+            border: 0;
+            background: transparent;
+
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* MAIN */
+
+        main {
+            width: min(1120px, 92%);
+            margin: auto;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 650px;
+
+            display: grid;
+            place-items: center;
+
+            text-align: center;
+
+            padding: 80px 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(65px, 10vw, 125px);
+
+            line-height: 0.9;
+
+            margin: 15px 0;
+
+            color: #304b63;
+
+            font-style: italic;
+
+            text-shadow:
+                2px 3px rgba(255, 255, 255, 0.55);
+        }
+
+        .hero p {
+            max-width: 700px;
+
+            margin: auto;
+
+            font-size: 20px;
+
+            line-height: 1.6;
+        }
+
+        .kicker {
+            font-weight: bold;
+
+            letter-spacing: 4px;
+
+            color: #637d94;
+
+            font-size: 13px;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+
+            gap: 12px;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            margin-top: 28px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 14px 22px;
+
+            background: #405f79;
+
+            color: white;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 5px 14px rgba(41, 70, 91, 0.15);
+
+            transition: 0.2s;
+
+            border: none;
+
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+
+            background: #314e66;
+        }
+
+        .btn.light {
+            background: white;
+
+            color: #405f79;
+        }
+
+        .btn.light:hover {
+            background: #eef4f7;
+        }
+
+        /* SECTIONS */
+
+        .section {
+            background: rgba(255, 255, 255, 0.93);
+
+            border-radius: 18px;
+
+            padding: 55px;
+
+            margin: 0 0 35px;
+
+            box-shadow:
+                0 14px 35px rgba(41, 70, 91, 0.10);
+        }
+
+        .cream {
+            background: rgba(250, 247, 239, 0.96);
+        }
+
+        .heading {
+            text-align: center;
+
+            margin-bottom: 32px;
+        }
+
+        .heading small {
+            letter-spacing: 4px;
+
+            color: #7890a5;
+
+            font-weight: bold;
+        }
+
+        .heading h2 {
+            font-size: 48px;
+
+            margin: 7px 0;
+
+            color: #354d64;
+
+            font-style: italic;
+        }
+
+        .heading p {
+            font-size: 18px;
+
+            color: #687988;
+        }
+
+        /* CARDS */
+
+        .grid3 {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 16px;
+        }
+
+        .card {
+            padding: 26px;
+
+            background: #f6f9fa;
+
+            border: 1px solid #dce4e8;
+
+            border-radius: 13px;
+
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 10px 25px rgba(40, 69, 90, 0.10);
+        }
+
+        .card .icon {
+            font-size: 52px;
+        }
+
+        .card h3 {
+            font-size: 25px;
+
+            margin: 10px 0;
+        }
+
+        .card p {
+            color: #6d7c89;
+
+            line-height: 1.5;
+        }
+
+        .card a {
+            color: #466b87;
+
+            font-weight: bold;
+        }
+
+        /* INFO */
+
+        .info {
+            margin-top: 25px;
+
+            padding: 20px;
+
+            background: #eef5f8;
+
+            border-left: 5px solid #6c91aa;
+
+            border-radius: 8px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 50px;
+
+            padding: 35px 7%;
+
+            background: #263b4d;
+
+            color: #d2dde5;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        footer .logo {
+            color: white;
+        }
+
+        footer a {
+            color: #dce8ef;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 850px) {
+
+            nav {
+                display: none;
+
+                position: absolute;
+
+                left: 0;
+                right: 0;
+
+                top: 65px;
+
+                background: white;
+
+                border-radius: 12px;
+
+                padding: 10px;
+
+                flex-direction: column;
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .menu {
+                display: block;
+
+                margin-left: auto;
+            }
+
+            .grid3 {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 35px 22px;
+            }
+
+            .hero h1 {
+                font-size: 65px;
+            }
+
+            .heading h2 {
+                font-size: 38px;
+            }
+
+            footer {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<header class="top">
+
+    <a class="logo" href="index.html">
+        <span>✦</span>
+        ANGEL PIECE
+    </a>
+
+    <nav id="nav">
+
+        <a class="active" href="index.html">
+            Home
+        </a>
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+        <a href="world.html">
+            Island & Bosses
+        </a>
+
+        <a href="store.html">
+            Official Store
+        </a>
+
+        <a href="codes.html">
+            Official Codes
+        </a>
+
+        <a href="community.html">
+            Community
+        </a>
+
+    </nav>
+
+    <button
+        class="menu"
+        onclick="toggleMenu()"
+        aria-label="Open menu">
+        ☰
+    </button>
+
+</header>
+
+
+<main>
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <div>
+
+        <div class="kicker">
+            WELCOME TO THE OFFICIAL WEBSITE
+        </div>
+
+        <h1>
+            Angel Piece
+        </h1>
+
+        <p>
+            Explore a new adventure, discover Angel Fruits,
+            battle legendary bosses and build your own legend.
+        </p>
+
+        <div class="buttons">
+
+            <a class="btn" href="shop.html">
+                OPEN SHOP
+            </a>
+
+            <a class="btn light" href="world.html">
+                EXPLORE THE WORLD
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     EXPLORE
+========================= -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            START HERE
+        </small>
+
+        <h2>
+            Explore Angel Piece
+        </h2>
+
+        <p>
+            Choose where you want to go.
+            Each button opens its own website page.
+        </p>
+
+    </div>
+
+
+    <div class="grid3">
+
+
+        <!-- SHOP -->
+
+        <div class="card">
+
+            <div class="icon">
+                🛒
+            </div>
+
+            <h3>
+                Shop
+            </h3>
+
+            <p>
+                Browse Angel Fruits, weapons and ships
+                with Cappies prices.
+            </p>
+
+            <a href="shop.html">
+                Go to Shop →
+            </a>
+
+        </div>
+
+
+        <!-- WORLD -->
+
+        <div class="card">
+
+            <div class="icon">
+                🏝️
+            </div>
+
+            <h3>
+                Island & Bosses
+            </h3>
+
+            <p>
+                Explore islands, enemies and legendary bosses.
+            </p>
+
+            <a href="world.html">
+                Explore World →
+            </a>
+
+        </div>
+
+
+        <!-- STORE -->
+
+        <div class="card">
+
+            <div class="icon">
+                🏪
+            </div>
+
+            <h3>
+                Official Store
+            </h3>
+
+            <p>
+                Visit the official Angel Piece store.
+                No Robux is used on this page.
+            </p>
+
+            <a href="store.html">
+                Open Official Store →
+            </a>
+
+        </div>
+
+
+        <!-- CODES -->
+
+        <div class="card">
+
+            <div class="icon">
+                🎁
+            </div>
+
+            <h3>
+                Official Codes
+            </h3>
+
+            <p>
+                Check official Angel Piece codes
+                and rewards.
+            </p>
+
+            <a href="codes.html">
+                View Codes →
+            </a>
+
+        </div>
+
+
+        <!-- COMMUNITY -->
+
+        <div class="card">
+
+            <div class="icon">
+                💬
+            </div>
+
+            <h3>
+                Community
+            </h3>
+
+            <p>
+                Meet the Angel Piece community,
+                creators and playtesters.
+            </p>
+
+            <a href="community.html">
+                Open Community →
+            </a>
+
+        </div>
+
+
+        <!-- FRUITS -->
+
+        <div class="card">
+
+            <div class="icon">
+                🍎
+            </div>
+
+            <h3>
+                Angel Fruits
+            </h3>
+
+            <p>
+                Discover the Angel Fruits
+                that power your character.
+            </p>
+
+            <a href="shop.html#fruits">
+                View Fruits →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     NEWS
+========================= -->
+
+<section class="section cream">
+
+    <div class="heading">
+
+        <small>
+            ANGEL PIECE NEWS
+        </small>
+
+        <h2>
+            Latest News
+        </h2>
+
+        <p>
+            Follow the development of Angel Piece.
+        </p>
+
+    </div>
+
+
+    <div class="grid3">
+
+        <div class="card">
+
+            <div class="icon">
+                🌟
+            </div>
+
+            <h3>
+                New Adventure
+            </h3>
+
+            <p>
+                New islands and areas are being
+                planned for future updates.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">
+                🍎
+            </div>
+
+            <h3>
+                Angel Fruits
+            </h3>
+
+            <p>
+                More Angel Fruits and abilities
+                will be added in future updates.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">
+                ⚔️
+            </div>
+
+            <h3>
+                New Bosses
+            </h3>
+
+            <p>
+                Powerful bosses will guard
+                the most dangerous locations.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     QUICK INFO
+========================= -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            ANGEL PIECE
+        </small>
+
+        <h2>
+            Your Adventure Starts Here
+        </h2>
+
+    </div>
+
+    <div class="info">
+
+        🌊 Explore the world<br>
+        🍎 Discover Angel Fruits<br>
+        ⚔️ Fight powerful bosses<br>
+        💰 Collect Cappies<br>
+        🏝️ Discover mysterious islands<br>
+        ⭐ Become stronger
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="logo">
+        ✦ ANGEL PIECE
+    </div>
+
+    <div>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        ·
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+        ·
+
+        <a href="world.html">
+            World
+        </a>
+
+        ·
+
+        <a href="store.html">
+            Official Store
+        </a>
+
+        ·
+
+        <a href="codes.html">
+            Codes
+        </a>
+
+        ·
+
+        <a href="community.html">
+            Community
+        </a>
+
+    </div>
+
+    <div>
+        © 2026 Angel Piece · Original game universe
+    </div>
+
+</footer>
+
+
+<script>
+
+function toggleMenu() {
+
+    const nav = document.getElementById("nav");
+
+    nav.classList.toggle("open");
+
+}
+
+document.querySelectorAll("nav a").forEach(function(link) {
+
+    link.addEventListener("click", function() {
+
+        document
+            .getElementById("nav")
+            .classList.remove("open");
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
