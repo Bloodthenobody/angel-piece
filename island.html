@@ -1,0 +1,2580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Islands — Angel Piece</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            color: #26384a;
+            background: linear-gradient(
+                180deg,
+                #79b0d8 0%,
+                #d9edf4 45%,
+                #f2eadc 100%
+            );
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .top {
+            position: sticky;
+            top: 14px;
+            z-index: 100;
+
+            width: min(1150px, 92%);
+            margin: 14px auto;
+
+            background: rgba(255,255,255,0.96);
+            border-radius: 16px;
+
+            padding: 14px 20px;
+
+            box-shadow: 0 10px 30px rgba(40,69,90,0.15);
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #39536d;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            display: inline-grid;
+            place-items: center;
+
+            width: 30px;
+            height: 30px;
+
+            border: 2px solid #86a5bd;
+            border-radius: 50%;
+        }
+
+        nav {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            padding: 9px 11px;
+            border-radius: 9px;
+
+            font-weight: bold;
+            color: #46586b;
+
+            transition: 0.2s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #f0f5f8;
+        }
+
+        .menu {
+            display: none;
+            border: 0;
+            background: transparent;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        main {
+            width: min(1150px, 92%);
+            margin: auto;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 70px 20px 45px;
+        }
+
+        .kicker {
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #637d94;
+            font-size: 13px;
+        }
+
+        .hero h1 {
+            font-size: 68px;
+            margin: 10px 0;
+
+            color: #304b63;
+            font-style: italic;
+
+            text-shadow: 2px 3px rgba(255,255,255,0.55);
+        }
+
+        .hero p {
+            max-width: 820px;
+            margin: auto;
+
+            font-size: 19px;
+            line-height: 1.6;
+
+            color: #5e7181;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.95);
+
+            border-radius: 18px;
+
+            padding: 42px;
+
+            margin-bottom: 35px;
+
+            box-shadow: 0 14px 35px rgba(41,70,91,0.10);
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .heading small {
+            letter-spacing: 4px;
+            color: #7890a5;
+            font-weight: bold;
+        }
+
+        .heading h2 {
+            font-size: 40px;
+            margin: 8px 0;
+
+            color: #354d64;
+            font-style: italic;
+        }
+
+        .heading p {
+            color: #687988;
+            font-size: 18px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .search {
+            flex: 1;
+            min-width: 220px;
+
+            padding: 14px 16px;
+
+            border: 1px solid #d5e0e6;
+            border-radius: 10px;
+
+            background: white;
+
+            font-size: 15px;
+            font-family: inherit;
+
+            outline: none;
+        }
+
+        .search:focus {
+            border-color: #8ba9bc;
+        }
+
+        .filter {
+            padding: 14px 16px;
+
+            border: 1px solid #d5e0e6;
+            border-radius: 10px;
+
+            background: white;
+
+            color: #526777;
+
+            font-family: inherit;
+
+            cursor: pointer;
+        }
+
+        .sea-card {
+            margin-bottom: 35px;
+        }
+
+        .sea-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+
+            padding: 20px 22px;
+
+            background: #eef5f8;
+            border-radius: 12px;
+
+            margin-bottom: 18px;
+        }
+
+        .sea-title h3 {
+            margin: 0;
+
+            color: #3d5b73;
+            font-size: 28px;
+        }
+
+        .sea-title span {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            color: #63798a;
+        }
+
+        .island-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .island {
+            background: #f8fafb;
+
+            border: 1px solid #dce4e8;
+            border-radius: 14px;
+
+            padding: 23px;
+
+            transition: 0.2s;
+        }
+
+        .island:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 12px 28px rgba(40,69,90,0.12);
+        }
+
+        .island-icon {
+            font-size: 46px;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .island h4 {
+            text-align: center;
+
+            font-size: 24px;
+
+            margin: 8px 0;
+
+            color: #405f79;
+        }
+
+        .island-description {
+            text-align: center;
+
+            color: #71808c;
+
+            line-height: 1.5;
+
+            min-height: 62px;
+        }
+
+        .island-tags {
+            text-align: center;
+            margin: 13px 0;
+        }
+
+        .tag {
+            display: inline-block;
+
+            padding: 6px 9px;
+
+            margin: 3px;
+
+            border-radius: 7px;
+
+            background: #e6eef2;
+
+            color: #526b7d;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .island-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+
+            margin-top: 15px;
+        }
+
+        .info {
+            background: white;
+
+            border: 1px solid #e0e7ea;
+
+            border-radius: 8px;
+
+            padding: 10px;
+
+            text-align: center;
+        }
+
+        .info strong {
+            display: block;
+
+            font-size: 13px;
+
+            color: #405f79;
+        }
+
+        .info span {
+            font-size: 11px;
+            color: #7b8993;
+        }
+
+        .special {
+            margin-top: 13px;
+
+            padding: 12px;
+
+            background: #edf4f7;
+
+            border-radius: 8px;
+
+            color: #526777;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+        .boss {
+            margin-top: 10px;
+
+            padding: 11px;
+
+            background: #f2eeee;
+
+            border-left: 4px solid #9a7777;
+
+            border-radius: 7px;
+
+            color: #665b5b;
+
+            font-size: 13px;
+        }
+
+        .info-box {
+            padding: 22px;
+
+            background: #edf5f8;
+
+            border-left: 5px solid #6d92aa;
+
+            border-radius: 9px;
+
+            color: #526777;
+
+            line-height: 1.7;
+
+            margin-bottom: 20px;
+        }
+
+        .sea-progression {
+            display: grid;
+
+            grid-template-columns: repeat(5, 1fr);
+
+            gap: 12px;
+        }
+
+        .progress-card {
+            padding: 18px;
+
+            background: #f7fafb;
+
+            border: 1px solid #dce4e8;
+
+            border-radius: 10px;
+
+            text-align: center;
+        }
+
+        .progress-card h3 {
+            margin: 0 0 8px;
+
+            color: #405f79;
+        }
+
+        .progress-card strong {
+            display: block;
+
+            font-size: 24px;
+
+            color: #526f86;
+        }
+
+        .progress-card span {
+            color: #788793;
+
+            font-size: 12px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            margin-top: 50px;
+
+            padding: 35px 7%;
+
+            background: #263b4d;
+
+            color: #d2dde5;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        footer .logo {
+            color: white;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 1050px) {
+            .sea-progression {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 850px) {
+
+            nav {
+                display: none;
+
+                position: absolute;
+
+                left: 0;
+                right: 0;
+
+                top: 65px;
+
+                background: white;
+
+                border-radius: 12px;
+
+                padding: 10px;
+
+                flex-direction: column;
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .menu {
+                display: block;
+                margin-left: auto;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+
+            .hero h1 {
+                font-size: 52px;
+            }
+
+            .island-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sea-progression {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .sea-progression {
+                grid-template-columns: 1fr;
+            }
+
+            .sea-title {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="top">
+
+    <a class="logo" href="index.html">
+        <span>✦</span>
+        ANGEL PIECE
+    </a>
+
+    <nav id="nav">
+
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="world.html" class="active">World</a>
+        <a href="fruits.html">Angel Fruits</a>
+        <a href="weapons.html">Weapons</a>
+        <a href="guns.html">Guns</a>
+        <a href="boats.html">Boats</a>
+        <a href="enemies.html">Enemies</a>
+        <a href="bosses.html">Bosses</a>
+        <a href="sea-beasts.html">Sea Beasts</a>
+        <a href="factions.html">Factions</a>
+        <a href="pets.html">Pets</a>
+        <a href="store.html">Official Store</a>
+        <a href="codes.html">Official Codes</a>
+        <a href="community.html">Community</a>
+
+    </nav>
+
+    <button class="menu" onclick="toggleMenu()">
+        ☰
+    </button>
+
+</header>
+
+
+<main>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="kicker">
+            ANGEL PIECE WORLD DATABASE
+        </div>
+
+        <h1>
+            Islands
+        </h1>
+
+        <p>
+            Explore the seas of Angel Piece and
+            discover islands, enemies, bosses,
+            NPCs and hidden locations.
+        </p>
+
+    </section>
+
+
+    <!-- WORLD INTRO -->
+
+    <section class="section">
+
+        <div class="heading">
+
+            <small>
+                THE WORLD
+            </small>
+
+            <h2>
+                Five Seas
+            </h2>
+
+            <p>
+                Each Sea becomes more dangerous as
+                your adventure continues.
+            </p>
+
+        </div>
+
+        <div class="info-box">
+
+            🌊 <strong>The Angel Piece world is divided
+            into five major Seas.</strong>
+
+            <br><br>
+
+            Start your journey in the first Sea,
+            become stronger, defeat powerful enemies
+            and eventually travel toward the Celestial
+            Realm in Sea 5.
+
+            <br><br>
+
+            ⚠️ Higher Seas contain stronger enemies,
+            rare Angel Fruits, powerful weapons,
+            special Species and unique bosses.
+
+        </div>
+
+        <div class="sea-progression">
+
+            <div class="progress-card">
+                <h3>Sea 1</h3>
+                <strong>1+</strong>
+                <span>Starting Sea</span>
+            </div>
+
+            <div class="progress-card">
+                <h3>Sea 2</h3>
+                <strong>2,500+</strong>
+                <span>Recommended Level</span>
+            </div>
+
+            <div class="progress-card">
+                <h3>Sea 3</h3>
+                <strong>5,000+</strong>
+                <span>Recommended Level</span>
+            </div>
+
+            <div class="progress-card">
+                <h3>Sea 4</h3>
+                <strong>10,000+</strong>
+                <span>Recommended Level</span>
+            </div>
+
+            <div class="progress-card">
+                <h3>Sea 5</h3>
+                <strong>20,000+</strong>
+                <span>Celestial Realm</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SEARCH -->
+
+    <section class="section">
+
+        <div class="heading">
+
+            <small>
+                ISLAND DATABASE
+            </small>
+
+            <h2>
+                Explore the Islands
+            </h2>
+
+            <p>
+                Search for an island or filter the
+                database by Sea.
+            </p>
+
+        </div>
+
+        <div class="controls">
+
+            <input
+                id="search"
+                class="search"
+                type="text"
+                placeholder="Search islands..."
+                oninput="filterIslands()"
+            >
+
+            <select
+                id="seaFilter"
+                class="filter"
+                onchange="filterIslands()"
+            >
+
+                <option value="all">
+                    All Seas
+                </option>
+
+                <option value="1">
+                    Sea 1
+                </option>
+
+                <option value="2">
+                    Sea 2
+                </option>
+
+                <option value="3">
+                    Sea 3
+                </option>
+
+                <option value="4">
+                    Sea 4
+                </option>
+
+                <option value="5">
+                    Sea 5
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- SEA 1 -->
+
+        <div class="sea-card">
+
+            <div class="sea-title">
+
+                <h3>🌊 Sea 1 — The Azure Sea</h3>
+
+                <span>
+                    LEVEL 1 — 2,499
+                </span>
+
+            </div>
+
+            <div class="island-grid">
+
+
+                <article
+                    class="island"
+                    data-sea="1"
+                    data-name="arrival island"
+                >
+
+                    <div class="island-icon">🏝️</div>
+
+                    <h4>Arrival Island</h4>
+
+                    <p class="island-description">
+                        The first island where new
+                        adventurers begin their journey.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 1</span>
+                        <span class="tag">Starter</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>Level 1+</strong>
+                            <span>Recommended</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>3 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>2 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Safe Zone</strong>
+                            <span>Area</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        🏠 Special: Starting area,
+                        first weapon shop and basic quest board.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="1"
+                    data-name="greenleaf village"
+                >
+
+                    <div class="island-icon">🌿</div>
+
+                    <h4>Greenleaf Village</h4>
+
+                    <p class="island-description">
+                        A peaceful settlement surrounded
+                        by forests and training grounds.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 1</span>
+                        <span class="tag">Village</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>100+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>5 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>3 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>2 Shops</strong>
+                            <span>Shops</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        🌳 Special: Forest training
+                        area and pet merchant.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="1"
+                    data-name="coral harbor"
+                >
+
+                    <div class="island-icon">🐚</div>
+
+                    <h4>Coral Harbor</h4>
+
+                    <p class="island-description">
+                        A busy harbor used by adventurers
+                        preparing to cross the open sea.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 1</span>
+                        <span class="tag">Harbor</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>500+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>7 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>4 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Boat Shop</strong>
+                            <span>Special</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        🚤 Special: Boat dealer and
+                        ocean travel quests.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="1"
+                    data-name="storm coast"
+                >
+
+                    <div class="island-icon">⛈️</div>
+
+                    <h4>Storm Coast</h4>
+
+                    <p class="island-description">
+                        A dangerous coastline where storms
+                        make navigation difficult.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 1</span>
+                        <span class="tag">Danger</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>1,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>4 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>5 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>1 Boss</strong>
+                            <span>Bosses</span>
+                        </div>
+
+                    </div>
+
+                    <div class="boss">
+                        👑 Boss: Stormbreaker
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="1"
+                    data-name="haki shrine"
+                >
+
+                    <div class="island-icon">⛩️</div>
+
+                    <h4>Haki Shrine</h4>
+
+                    <p class="island-description">
+                        An ancient training location where
+                        adventurers can begin mastering Haki.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 1</span>
+                        <span class="tag">Haki</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>1,800+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>4 NPCs</strong>
+                            <span>Teachers</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Training</strong>
+                            <span>Feature</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Rare</strong>
+                            <span>Techniques</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        ✨ Special: Haki training
+                        and advanced combat challenges.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="1"
+                    data-name="azure gate"
+                >
+
+                    <div class="island-icon">🚪</div>
+
+                    <h4>Azure Gate</h4>
+
+                    <p class="island-description">
+                        The final gateway of Sea 1.
+                        Only strong adventurers can continue.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 1</span>
+                        <span class="tag">Gateway</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>2,400+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>6 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>6 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>2,500</strong>
+                            <span>Gate Requirement</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        🌊 Special: Gateway to Sea 2.
+                        Level 2,500 required.
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+
+        <!-- SEA 2 -->
+
+        <div class="sea-card">
+
+            <div class="sea-title">
+
+                <h3>🌊 Sea 2 — The Grand Current</h3>
+
+                <span>
+                    LEVEL 2,500 — 4,999
+                </span>
+
+            </div>
+
+            <div class="island-grid">
+
+
+                <article
+                    class="island"
+                    data-sea="2"
+                    data-name="crystal bay"
+                >
+
+                    <div class="island-icon">💎</div>
+
+                    <h4>Crystal Bay</h4>
+
+                    <p class="island-description">
+                        A bright island filled with enormous
+                        crystals and hidden caves.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 2</span>
+                        <span class="tag">Crystal</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>2,500+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>7 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>5 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Rare Ore</strong>
+                            <span>Resource</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        💎 Special: Crystal mining
+                        and rare crafting materials.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="2"
+                    data-name="skyreach island"
+                >
+
+                    <div class="island-icon">☁️</div>
+
+                    <h4>Skyreach Island</h4>
+
+                    <p class="island-description">
+                        A floating island hidden high above
+                        the ocean.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 2</span>
+                        <span class="tag">Sky</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>3,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>5 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>4 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Air Trial</strong>
+                            <span>Special</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        ☁️ Special: Air movement
+                        challenge and sky treasures.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="2"
+                    data-name="ember island"
+                >
+
+                    <div class="island-icon">🌋</div>
+
+                    <h4>Ember Island</h4>
+
+                    <p class="island-description">
+                        A volcanic island where powerful
+                        fire creatures roam.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 2</span>
+                        <span class="tag">Volcano</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>3,500+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>6 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>6 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>1 Boss</strong>
+                            <span>Bosses</span>
+                        </div>
+
+                    </div>
+
+                    <div class="boss">
+                        👑 Boss: Magma Warden
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="2"
+                    data-name="moonlit port"
+                >
+
+                    <div class="island-icon">🌙</div>
+
+                    <h4>Moonlit Port</h4>
+
+                    <p class="island-description">
+                        A mysterious nighttime port filled
+                        with merchants and explorers.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 2</span>
+                        <span class="tag">Port</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>4,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>10 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>5 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Trading</strong>
+                            <span>Feature</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        🛒 Special: Advanced shops,
+                        trading and secret quests.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="2"
+                    data-name="grand gate"
+                >
+
+                    <div class="island-icon">🏰</div>
+
+                    <h4>Grand Gate</h4>
+
+                    <p class="island-description">
+                        The final fortress before the
+                        dangerous third Sea.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 2</span>
+                        <span class="tag">Fortress</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>4,700+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>8 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>7 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>5,000</strong>
+                            <span>Gate Requirement</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        🚪 Level 5,000 required
+                        to enter Sea 3.
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+
+        <!-- SEA 3 -->
+
+        <div class="sea-card">
+
+            <div class="sea-title">
+
+                <h3>🌊 Sea 3 — The Wild Expanse</h3>
+
+                <span>
+                    LEVEL 5,000 — 9,999
+                </span>
+
+            </div>
+
+            <div class="island-grid">
+
+
+                <article
+                    class="island"
+                    data-sea="3"
+                    data-name="thunder island"
+                >
+
+                    <div class="island-icon">⚡</div>
+
+                    <h4>Thunder Island</h4>
+
+                    <p class="island-description">
+                        Lightning constantly strikes this
+                        enormous storm-covered island.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 3</span>
+                        <span class="tag">Storm</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>5,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>8 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>7 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>1 Boss</strong>
+                            <span>Bosses</span>
+                        </div>
+
+                    </div>
+
+                    <div class="boss">
+                        👑 Boss: Thunder Titan
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="3"
+                    data-name="ancient ruins"
+                >
+
+                    <div class="island-icon">🏛️</div>
+
+                    <h4>Ancient Ruins</h4>
+
+                    <p class="island-description">
+                        Forgotten ruins containing clues about
+                        the ancient history of the world.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 3</span>
+                        <span class="tag">Ancient</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>6,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>6 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>6 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Hidden Room</strong>
+                            <span>Secret</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        🔐 Special: Ancient puzzles
+                        and hidden treasure chambers.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="3"
+                    data-name="frostfall"
+                >
+
+                    <div class="island-icon">❄️</div>
+
+                    <h4>Frostfall</h4>
+
+                    <p class="island-description">
+                        A frozen island filled with icy
+                        creatures and dangerous caves.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 3</span>
+                        <span class="tag">Ice</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>7,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>7 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>7 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>1 Boss</strong>
+                            <span>Bosses</span>
+                        </div>
+
+                    </div>
+
+                    <div class="boss">
+                        👑 Boss: Frost Monarch
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="3"
+                    data-name="celestial forest"
+                >
+
+                    <div class="island-icon">🌲</div>
+
+                    <h4>Celestial Forest</h4>
+
+                    <p class="island-description">
+                        A strange forest where glowing
+                        creatures protect ancient secrets.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 3</span>
+                        <span class="tag">Mystic</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>8,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>8 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>8 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Rare Pets</strong>
+                            <span>Feature</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        🐾 Special: Rare pet encounters
+                        and hidden species quests.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="3"
+                    data-name="warrior citadel"
+                >
+
+                    <div class="island-icon">⚔️</div>
+
+                    <h4>Warrior Citadel</h4>
+
+                    <p class="island-description">
+                        A massive combat fortress where
+                        elite warriors test their strength.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 3</span>
+                        <span class="tag">Combat</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>9,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>10 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>9 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Trial Arena</strong>
+                            <span>Feature</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        ⚔️ Special: Elite combat
+                        trials and weapon challenges.
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+
+        <!-- SEA 4 -->
+
+        <div class="sea-card">
+
+            <div class="sea-title">
+
+                <h3>🌊 Sea 4 — The Final Frontier</h3>
+
+                <span>
+                    LEVEL 10,000 — 19,999
+                </span>
+
+            </div>
+
+            <div class="island-grid">
+
+
+                <article
+                    class="island"
+                    data-sea="4"
+                    data-name="sky science island"
+                >
+
+                    <div class="island-icon">🔬</div>
+
+                    <h4>Sky Science Island</h4>
+
+                    <p class="island-description">
+                        A futuristic research island filled
+                        with inventions and mysterious technology.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 4</span>
+                        <span class="tag">Science</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>10,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>12 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>9 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Research Lab</strong>
+                            <span>Special</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        🔬 Special: Advanced research,
+                        experiments and technology quests.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="4"
+                    data-name="giantwood"
+                >
+
+                    <div class="island-icon">🌳</div>
+
+                    <h4>Giantwood</h4>
+
+                    <p class="island-description">
+                        A gigantic ancient forest inhabited
+                        by enormous warriors and creatures.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 4</span>
+                        <span class="tag">Giants</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>12,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>10 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>10 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>1 Boss</strong>
+                            <span>Bosses</span>
+                        </div>
+
+                    </div>
+
+                    <div class="boss">
+                        👑 Boss: Ancient Giant King
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="4"
+                    data-name="demon wasteland"
+                >
+
+                    <div class="island-icon">🔥</div>
+
+                    <h4>Demon Wasteland</h4>
+
+                    <p class="island-description">
+                        A dangerous region where powerful
+                        Demon warriors gather.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 4</span>
+                        <span class="tag">Demon</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>14,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>9 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>11 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Demon Trials</strong>
+                            <span>Feature</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        😈 Special: Demon Species
+                        trials and dark combat challenges.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="4"
+                    data-name="angel sanctuary"
+                >
+
+                    <div class="island-icon">😇</div>
+
+                    <h4>Angel Sanctuary</h4>
+
+                    <p class="island-description">
+                        A sacred sanctuary protected by
+                        powerful Angel warriors.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 4</span>
+                        <span class="tag">Angel</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>14,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>9 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>11 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Angel Trials</strong>
+                            <span>Feature</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        😇 Special: Angel Species
+                        trials and celestial challenges.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="4"
+                    data-name="five throne fortress"
+                >
+
+                    <div class="island-icon">👑</div>
+
+                    <h4>Five Throne Fortress</h4>
+
+                    <p class="island-description">
+                        The final fortress protected by five
+                        extremely powerful guardians.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 4</span>
+                        <span class="tag">Endgame</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>18,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>5 Guardians</strong>
+                            <span>Bosses</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>12 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Extreme</strong>
+                            <span>Difficulty</span>
+                        </div>
+
+                    </div>
+
+                    <div class="boss">
+                        👑 Bosses: The Five Thrones
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="4"
+                    data-name="eternal throne"
+                >
+
+                    <div class="island-icon">🏰</div>
+
+                    <h4>Eternal Throne</h4>
+
+                    <p class="island-description">
+                        The final battlefield of Sea 4,
+                        where the ruler of the frontier awaits.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 4</span>
+                        <span class="tag">Final Boss</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>19,500+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>8 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Final Battle</strong>
+                            <span>Feature</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>20,000</strong>
+                            <span>Sea 5 Requirement</span>
+                        </div>
+
+                    </div>
+
+                    <div class="boss">
+                        👑 Final Boss: The Eternal King
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+
+        <!-- SEA 5 -->
+
+        <div class="sea-card">
+
+            <div class="sea-title">
+
+                <h3>🌌 Sea 5 — The Celestial Realm</h3>
+
+                <span>
+                    LEVEL 20,000+
+                </span>
+
+            </div>
+
+            <div class="island-grid">
+
+
+                <article
+                    class="island"
+                    data-sea="5"
+                    data-name="celestial gate"
+                >
+
+                    <div class="island-icon">🌌</div>
+
+                    <h4>Celestial Gate</h4>
+
+                    <p class="island-description">
+                        The entrance to the heavenly realm,
+                        hidden beyond the final Sea.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 5</span>
+                        <span class="tag">Celestial</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>20,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>8 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Celestial</strong>
+                            <span>Realm</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Rebirth</strong>
+                            <span>Feature</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        ✨ Special: First Celestial
+                        Realm area and Rebirth introduction.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="5"
+                    data-name="heavenly gardens"
+                >
+
+                    <div class="island-icon">🌸</div>
+
+                    <h4>Heavenly Gardens</h4>
+
+                    <p class="island-description">
+                        A peaceful celestial island filled
+                        with powerful guardians.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 5</span>
+                        <span class="tag">Heaven</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>20,500+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>10 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>8 Enemy Types</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Rare Pets</strong>
+                            <span>Feature</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        🪽 Special: Celestial pets,
+                        rare materials and rebirth quests.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="5"
+                    data-name="joyful sanctuary"
+                >
+
+                    <div class="island-icon">☀️</div>
+
+                    <h4>Joyful Sanctuary</h4>
+
+                    <p class="island-description">
+                        A legendary sanctuary where
+                        adventurers learn about true freedom.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 5</span>
+                        <span class="tag">Legendary</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>21,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>7 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Ancient Lore</strong>
+                            <span>Feature</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Rebirth</strong>
+                            <span>System</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        ☀️ Special: The legendary
+                        Joyful Guardian can be found here.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="5"
+                    data-name="rebirth temple"
+                >
+
+                    <div class="island-icon">♾️</div>
+
+                    <h4>Rebirth Temple</h4>
+
+                    <p class="island-description">
+                        A sacred location where powerful
+                        adventurers can begin their next cycle.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 5</span>
+                        <span class="tag">Rebirth</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>20,000+</strong>
+                            <span>Level</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>6 NPCs</strong>
+                            <span>NPCs</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Rebirth</strong>
+                            <span>System</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Infinite</strong>
+                            <span>Progression</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        ♾️ Special: Rebirth system.
+                        Become stronger and begin a harder cycle.
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="island"
+                    data-sea="5"
+                    data-name="eternal horizon"
+                >
+
+                    <div class="island-icon">🌅</div>
+
+                    <h4>Eternal Horizon</h4>
+
+                    <p class="island-description">
+                        The mysterious final area currently
+                        known beyond the Celestial Realm.
+                    </p>
+
+                    <div class="island-tags">
+                        <span class="tag">Sea 5</span>
+                        <span class="tag">Endgame</span>
+                    </div>
+
+                    <div class="island-info">
+
+                        <div class="info">
+                            <strong>Rebirth+</strong>
+                            <span>Requirement</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Unknown</strong>
+                            <span>Enemies</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Unknown</strong>
+                            <span>Bosses</span>
+                        </div>
+
+                        <div class="info">
+                            <strong>Secret</strong>
+                            <span>Area</span>
+                        </div>
+
+                    </div>
+
+                    <div class="special">
+                        🔮 Special: A mysterious region
+                        reserved for future Angel Piece content.
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+
+        <div id="noResults" class="info-box hidden">
+            🔎 No islands found. Try another search or Sea.
+        </div>
+
+    </section>
+
+
+    <!-- SEA REQUIREMENTS -->
+
+    <section class="section">
+
+        <div class="heading">
+
+            <small>
+                SEA PROGRESSION
+            </small>
+
+            <h2>
+                Unlocking the Seas
+            </h2>
+
+            <p>
+                Become stronger before entering the
+                next part of the world.
+            </p>
+
+        </div>
+
+        <div class="info-box">
+
+            🌊 <strong>Sea 1 → Sea 2</strong>
+
+            <br>
+
+            Reach Level <strong>2,500</strong>.
+
+            <br><br>
+
+            🌊 <strong>Sea 2 → Sea 3</strong>
+
+            <br>
+
+            Reach Level <strong>5,000</strong>.
+
+            <br><br>
+
+            🌊 <strong>Sea 3 → Sea 4</strong>
+
+            <br>
+
+            Reach Level <strong>10,000</strong>.
+
+            <br><br>
+
+            🌌 <strong>Sea 4 → Sea 5</strong>
+
+            <br>
+
+            Reach Level <strong>20,000</strong>.
+
+        </div>
+
+    </section>
+
+
+    <!-- WORLD FEATURES -->
+
+    <section class="section">
+
+        <div class="heading">
+
+            <small>
+                WORLD FEATURES
+            </small>
+
+            <h2>
+                What Can You Find?
+            </h2>
+
+        </div>
+
+        <div class="island-grid">
+
+            <div class="island">
+
+                <div class="island-icon">😈</div>
+
+                <h4>Demons</h4>
+
+                <p class="island-description">
+                    Demon players can discover dark
+                    locations, Demon Species and
+                    powerful Demon pets.
+                </p>
+
+            </div>
+
+
+            <div class="island">
+
+                <div class="island-icon">😇</div>
+
+                <h4>Angels</h4>
+
+                <p class="island-description">
+                    Angel players can discover sacred
+                    areas, Angel Species and celestial pets.
+                </p>
+
+            </div>
+
+
+            <div class="island">
+
+                <div class="island-icon">🐉</div>
+
+                <h4>Sea Beasts</h4>
+
+                <p class="island-description">
+                    Dangerous creatures can appear
+                    while travelling between islands.
+                </p>
+
+            </div>
+
+
+            <div class="island">
+
+                <div class="island-icon">🎁</div>
+
+                <h4>Secrets</h4>
+
+                <p class="island-description">
+                    Hidden rooms, secret quests and
+                    rare rewards are scattered around
+                    the world.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="logo">
+        ✦ ANGEL PIECE
+    </div>
+
+    <div>
+
+        <a href="index.html">Home</a>
+        ·
+        <a href="shop.html">Shop</a>
+        ·
+        <a href="islands.html">Islands</a>
+        ·
+        <a href="fruits.html">Angel Fruits</a>
+        ·
+        <a href="weapons.html">Weapons</a>
+        ·
+        <a href="guns.html">Guns</a>
+        ·
+        <a href="boats.html">Boats</a>
+        ·
+        <a href="enemies.html">Enemies</a>
+        ·
+        <a href="bosses.html">Bosses</a>
+        ·
+        <a href="sea-beasts.html">Sea Beasts</a>
+        ·
+        <a href="factions.html">Factions</a>
+        ·
+        <a href="pets.html">Pets</a>
+        ·
+        <a href="store.html">Store</a>
+        ·
+        <a href="codes.html">Codes</a>
+        ·
+        <a href="community.html">Community</a>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+function toggleMenu() {
+
+    document
+        .getElementById("nav")
+        .classList.toggle("open");
+
+}
+
+
+/* ISLAND SEARCH + SEA FILTER */
+
+function filterIslands() {
+
+    const searchValue =
+        document
+            .getElementById("search")
+            .value
+            .toLowerCase();
+
+    const seaValue =
+        document
+            .getElementById("seaFilter")
+            .value;
+
+    const islands =
+        document.querySelectorAll(".island");
+
+    let visibleIslands = 0;
+
+
+    islands.forEach(function(island) {
+
+        const name =
+            island.dataset.name.toLowerCase();
+
+        const sea =
+            island.dataset.sea;
+
+
+        const matchesSearch =
+            name.includes(searchValue);
+
+
+        const matchesSea =
+            seaValue === "all" ||
+            sea === seaValue;
+
+
+        if (
+            matchesSearch &&
+            matchesSea
+        ) {
+
+            island.classList.remove("hidden");
+
+            visibleIslands++;
+
+        } else {
+
+            island.classList.add("hidden");
+
+        }
+
+    });
+
+
+    /*
+        Hide empty Sea sections when a filter
+        is active.
+    */
+
+    const seaCards =
+        document.querySelectorAll(".sea-card");
+
+
+    seaCards.forEach(function(seaCard) {
+
+        const visible =
+            seaCard.querySelectorAll(
+                ".island:not(.hidden)"
+            ).length;
+
+
+        if (visible === 0) {
+
+            seaCard.classList.add("hidden");
+
+        } else {
+
+            seaCard.classList.remove("hidden");
+
+        }
+
+    });
+
+
+    const noResults =
+        document.getElementById("noResults");
+
+
+    if (visibleIslands === 0) {
+
+        noResults.classList.remove("hidden");
+
+    } else {
+
+        noResults.classList.add("hidden");
+
+    }
+
+}
+
+
+/* MOBILE MENU */
+
+document
+    .querySelectorAll("nav a")
+    .forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function() {
+
+                document
+                    .getElementById("nav")
+                    .classList.remove("open");
+
+            }
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
