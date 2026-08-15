@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sea Beasts — Angel Piece</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            color: #26384a;
+            background: linear-gradient(
+                180deg,
+                #6da8d2 0%,
+                #cfe8f1 48%,
+                #f2eadc 100%
+            );
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .top {
+            position: sticky;
+            top: 14px;
+            z-index: 100;
+
+            width: min(1120px, 92%);
+            margin: 14px auto;
+
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+
+            padding: 14px 20px;
+
+            box-shadow: 0 10px 30px rgba(40,69,90,0.15);
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #39536d;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            display: inline-grid;
+            place-items: center;
+
+            width: 30px;
+            height: 30px;
+
+            border: 2px solid #86a5bd;
+            border-radius: 50%;
+        }
+
+        nav {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            flex: 1;
+        }
+
+        nav a {
+            padding: 11px 13px;
+            border-radius: 9px;
+
+            font-weight: bold;
+            color: #46586b;
+
+            transition: 0.2s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #f0f5f8;
+        }
+
+        .menu {
+            display: none;
+
+            border: 0;
+            background: transparent;
+
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        main {
+            width: min(1120px, 92%);
+            margin: auto;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 75px 20px 45px;
+        }
+
+        .hero h1 {
+            font-size: 68px;
+            margin: 10px 0;
+
+            color: #304b63;
+            font-style: italic;
+
+            text-shadow: 2px 3px rgba(255,255,255,0.55);
+        }
+
+        .hero p {
+            max-width: 780px;
+            margin: auto;
+
+            font-size: 19px;
+            line-height: 1.6;
+
+            color: #5e7181;
+        }
+
+        .kicker {
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #637d94;
+            font-size: 13px;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.95);
+
+            border-radius: 18px;
+
+            padding: 45px;
+
+            margin-bottom: 35px;
+
+            box-shadow:
+                0 14px 35px rgba(41,70,91,0.10);
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .heading small {
+            letter-spacing: 4px;
+            color: #7890a5;
+            font-weight: bold;
+        }
+
+        .heading h2 {
+            font-size: 42px;
+            margin: 8px 0;
+
+            color: #354d64;
+            font-style: italic;
+        }
+
+        .heading p {
+            color: #687988;
+            font-size: 18px;
+        }
+
+        .beast-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .beast-card {
+            padding: 28px;
+
+            background: #f6f9fa;
+
+            border: 1px solid #dce4e8;
+
+            border-radius: 14px;
+
+            transition: 0.2s;
+        }
+
+        .beast-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 10px 25px rgba(40,69,90,0.12);
+        }
+
+        .beast-icon {
+            font-size: 58px;
+            margin-bottom: 8px;
+        }
+
+        .beast-card h3 {
+            font-size: 25px;
+            margin: 8px 0;
+        }
+
+        .beast-card p {
+            color: #6d7c89;
+            line-height: 1.5;
+        }
+
+        .tag {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 7px;
+
+            background: #e5edf2;
+
+            color: #526b7d;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .stats {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 8px;
+
+            margin-top: 15px;
+        }
+
+        .stat {
+            padding: 9px;
+
+            background: white;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            border: 1px solid #e1e7ea;
+        }
+
+        .stat strong {
+            display: block;
+
+            font-size: 14px;
+
+            color: #405f79;
+        }
+
+        .stat span {
+            font-size: 12px;
+
+            color: #7a8790;
+        }
+
+        .ability {
+            margin-top: 12px;
+
+            padding: 10px;
+
+            background: #eef4f7;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            color: #526777;
+        }
+
+        .intro-box {
+            padding: 20px;
+
+            background: #edf5f8;
+
+            border-left: 5px solid #6d92aa;
+
+            border-radius: 8px;
+
+            line-height: 1.6;
+
+            color: #526777;
+
+            margin-bottom: 30px;
+        }
+
+        .dark-box {
+            background: #eef0f3;
+            border-left-color: #596d7e;
+        }
+
+        footer {
+            margin-top: 50px;
+
+            padding: 35px 7%;
+
+            background: #263b4d;
+
+            color: #d2dde5;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        footer .logo {
+            color: white;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+
+            .beast-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 850px) {
+
+            nav {
+                display: none;
+
+                position: absolute;
+
+                left: 0;
+                right: 0;
+
+                top: 65px;
+
+                background: white;
+
+                border-radius: 12px;
+
+                padding: 10px;
+
+                flex-direction: column;
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .menu {
+                display: block;
+
+                margin-left: auto;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+
+            .hero h1 {
+                font-size: 52px;
+            }
+
+            .beast-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="top">
+
+    <a class="logo" href="index.html">
+        <span>✦</span>
+        ANGEL PIECE
+    </a>
+
+    <nav id="nav">
+
+        <a href="index.html">Home</a>
+
+        <a href="shop.html">Shop</a>
+
+        <a href="world.html">Island & Bosses</a>
+
+        <a href="fruits.html">Angel Fruits</a>
+
+        <a href="weapons.html">Weapons</a>
+
+        <a href="guns.html">Guns</a>
+
+        <a href="boats.html">Boats</a>
+
+        <a href="enemies.html">Enemies</a>
+
+        <a href="bosses.html">Bosses</a>
+
+        <a href="sea-beasts.html" class="active">
+            Sea Beasts
+        </a>
+
+        <a href="store.html">Official Store</a>
+
+        <a href="codes.html">Official Codes</a>
+
+        <a href="community.html">Community</a>
+
+    </nav>
+
+    <button class="menu" onclick="toggleMenu()">
+        ☰
+    </button>
+
+</header>
+
+
+<main>
+
+<section class="hero">
+
+    <div class="kicker">
+        ANGEL PIECE DATABASE
+    </div>
+
+    <h1>
+        Sea Beasts
+    </h1>
+
+    <p>
+        Explore the mysterious creatures that roam
+        the oceans of Angel Piece. Some hunt sailors,
+        while others can help them.
+    </p>
+
+</section>
+
+
+<!-- DEMONIC CAPTURES -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            HOSTILE CREATURES
+        </small>
+
+        <h2>
+            😈 Demonic Captures
+        </h2>
+
+        <p>
+            Dangerous sea creatures that attack ships
+            and adventurers who enter their waters.
+        </p>
+
+    </div>
+
+
+    <div class="intro-box dark-box">
+
+        ⚠️ <strong>Warning:</strong>
+
+        <br><br>
+
+        Demonic Captures are hostile creatures.
+        They can attack boats, destroy ships and
+        cause massive damage to players.
+
+        <br><br>
+
+        Stronger Demonic Captures can appear in
+        higher Seas.
+
+    </div>
+
+
+    <div class="beast-grid">
+
+
+        <!-- ABYSSAL FANG -->
+
+        <div class="beast-card">
+
+            <div class="beast-icon">
+                🦈
+            </div>
+
+            <span class="tag">
+                Demonic Capture
+            </span>
+
+            <h3>
+                Abyssal Fang
+            </h3>
+
+            <p>
+                A massive predator that hunts small
+                ships near dangerous waters.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 300</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>35,000</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>500</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>8,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🌊 Ability: Ocean Rush
+            </div>
+
+        </div>
+
+
+        <!-- DARK TIDEBREAKER -->
+
+        <div class="beast-card">
+
+            <div class="beast-icon">
+                🐙
+            </div>
+
+            <span class="tag">
+                Demonic Capture
+            </span>
+
+            <h3>
+                Dark Tidebreaker
+            </h3>
+
+            <p>
+                A gigantic ocean creature capable
+                of wrapping ships in its tentacles.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 1,500</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>180,000</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>1,200</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>35,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🌊 Ability: Crushing Tentacles
+            </div>
+
+        </div>
+
+
+        <!-- INFERNAL LEVIATHAN -->
+
+        <div class="beast-card">
+
+            <div class="beast-icon">
+                🐉
+            </div>
+
+            <span class="tag">
+                Demonic Capture
+            </span>
+
+            <h3>
+                Infernal Leviathan
+            </h3>
+
+            <p>
+                An enormous beast surrounded by dark
+                energy from the deepest ocean.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 7,500</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>1,500,000</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>6,500</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>300,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🌋 Ability: Infernal Wave
+            </div>
+
+        </div>
+
+
+        <!-- VOID SERPENT -->
+
+        <div class="beast-card">
+
+            <div class="beast-icon">
+                🐍
+            </div>
+
+            <span class="tag">
+                Demonic Capture
+            </span>
+
+            <h3>
+                Void Serpent
+            </h3>
+
+            <p>
+                A mysterious serpent that emerges
+                from portals beneath the sea.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 12,000</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>4,000,000</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>12,000</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>750,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                🌑 Ability: Void Surge
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ANGELIC HELPERS -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            FRIENDLY CREATURES
+        </small>
+
+        <h2>
+            😇 Angelic Helpers
+        </h2>
+
+        <p>
+            Rare creatures that assist travelers
+            instead of attacking them.
+        </p>
+
+    </div>
+
+
+    <div class="intro-box">
+
+        ✨ <strong>Angelic Helpers</strong>
+
+        <br><br>
+
+        These special creatures are peaceful
+        guardians of the ocean.
+
+        <br><br>
+
+        They can protect players, repair boats
+        and sometimes lead travelers toward
+        hidden locations.
+
+    </div>
+
+
+    <div class="beast-grid">
+
+
+        <!-- SKY WHALE -->
+
+        <div class="beast-card">
+
+            <div class="beast-icon">
+                🐋
+            </div>
+
+            <span class="tag">
+                Angelic Helper
+            </span>
+
+            <h3>
+                Skywhale
+            </h3>
+
+            <p>
+                A peaceful celestial whale that
+                travels above the ocean.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 500</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>50,000</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>Support</strong>
+                    <span>Type</span>
+                </div>
+
+                <div class="stat">
+                    <strong>Rare</strong>
+                    <span>Rarity</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                ✨ Ability: Healing Mist
+            </div>
+
+        </div>
+
+
+        <!-- LUMINA RAY -->
+
+        <div class="beast-card">
+
+            <div class="beast-icon">
+                🐠
+            </div>
+
+            <span class="tag">
+                Angelic Helper
+            </span>
+
+            <h3>
+                Lumina Ray
+            </h3>
+
+            <p>
+                A glowing sea creature that guides
+                ships through dangerous waters.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 2,000</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>120,000</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>Support</strong>
+                    <span>Type</span>
+                </div>
+
+                <div class="stat">
+                    <strong>Epic</strong>
+                    <span>Rarity</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                ✨ Ability: Light Trail
+            </div>
+
+        </div>
+
+
+        <!-- CELESTIAL DRAGON -->
+
+        <div class="beast-card">
+
+            <div class="beast-icon">
+                🐲
+            </div>
+
+            <span class="tag">
+                Angelic Helper
+            </span>
+
+            <h3>
+                Celestial Dragon
+            </h3>
+
+            <p>
+                An ancient dragon that protects
+                worthy adventurers at sea.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 7,500</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>1,000,000</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>Support</strong>
+                    <span>Type</span>
+                </div>
+
+                <div class="stat">
+                    <strong>Legendary</strong>
+                    <span>Rarity</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                ✨ Ability: Celestial Shield
+            </div>
+
+        </div>
+
+
+        <!-- DIVINE LEVIATHAN -->
+
+        <div class="beast-card">
+
+            <div class="beast-icon">
+                🌟
+            </div>
+
+            <span class="tag">
+                Angelic Helper
+            </span>
+
+            <h3>
+                Divine Leviathan
+            </h3>
+
+            <p>
+                A legendary ocean guardian said to
+                protect the path to the heavenly Seas.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 20,000</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>8,000,000</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>Support</strong>
+                    <span>Type</span>
+                </div>
+
+                <div class="stat">
+                    <strong>Mythical</strong>
+                    <span>Rarity</span>
+                </div>
+
+            </div>
+
+            <div class="ability">
+                ✨ Ability: Divine Protection
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- OCEAN INFORMATION -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            OCEAN SYSTEM
+        </small>
+
+        <h2>
+            The Living Ocean
+        </h2>
+
+        <p>
+            The ocean of Angel Piece is more than
+            just a way to travel between islands.
+        </p>
+
+    </div>
+
+
+    <div class="intro-box">
+
+        🌊 <strong>Ocean Events</strong>
+
+        <br><br>
+
+        Sea Beasts can appear while players are
+        traveling between islands.
+
+        <br><br>
+
+        😈 Demonic Captures can attack players
+        and their boats.
+
+        <br><br>
+
+        😇 Angelic Helpers can appear and assist
+        players during dangerous journeys.
+
+        <br><br>
+
+        🗺️ Some rare creatures may also reveal
+        secret locations.
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="logo">
+        ✦ ANGEL PIECE
+    </div>
+
+    <div>
+
+        <a href="index.html">Home</a>
+        ·
+        <a href="shop.html">Shop</a>
+        ·
+        <a href="world.html">World</a>
+        ·
+        <a href="fruits.html">Angel Fruits</a>
+        ·
+        <a href="weapons.html">Weapons</a>
+        ·
+        <a href="guns.html">Guns</a>
+        ·
+        <a href="boats.html">Boats</a>
+        ·
+        <a href="enemies.html">Enemies</a>
+        ·
+        <a href="bosses.html">Bosses</a>
+        ·
+        <a href="sea-beasts.html">Sea Beasts</a>
+        ·
+        <a href="store.html">Store</a>
+        ·
+        <a href="codes.html">Codes</a>
+        ·
+        <a href="community.html">Community</a>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+function toggleMenu() {
+
+    document
+        .getElementById("nav")
+        .classList.toggle("open");
+
+}
+
+
+document
+    .querySelectorAll("nav a")
+    .forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function() {
+
+                document
+                    .getElementById("nav")
+                    .classList.remove("open");
+
+            }
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
