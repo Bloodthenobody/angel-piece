@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abilities — Angel Piece</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Georgia,"Times New Roman",serif;
+color:#26384a;
+background:linear-gradient(180deg,#79b0d8,#d9edf4 45%,#f2eadc);
+min-height:100vh
+}
+a{text-decoration:none;color:inherit}
+.top{
+position:sticky;top:14px;z-index:10;
+width:min(1150px,92%);margin:14px auto;
+background:rgba(255,255,255,.96);
+border-radius:16px;padding:14px 20px;
+box-shadow:0 10px 30px rgba(40,69,90,.15);
+display:flex;align-items:center;gap:20px
+}
+.logo{font-size:22px;font-weight:bold;color:#39536d;white-space:nowrap}
+.logo span{
+display:inline-grid;place-items:center;width:30px;height:30px;
+border:2px solid #86a5bd;border-radius:50%
+}
+nav{display:flex;gap:4px;justify-content:center;flex:1;flex-wrap:wrap}
+nav a{padding:9px 11px;border-radius:9px;font-weight:bold;color:#46586b}
+nav a:hover,nav a.active{background:#f0f5f8}
+.menu{display:none;border:0;background:none;font-size:24px}
+main{width:min(1100px,92%);margin:auto}
+.hero{text-align:center;padding:75px 20px 45px}
+.kicker{font-weight:bold;letter-spacing:4px;color:#637d94;font-size:13px}
+.hero h1{font-size:68px;margin:10px 0;color:#304b63;font-style:italic}
+.hero p{max-width:800px;margin:auto;font-size:19px;line-height:1.6;color:#5e7181}
+.section{
+background:rgba(255,255,255,.95);
+border-radius:18px;padding:42px;margin-bottom:35px;
+box-shadow:0 14px 35px rgba(41,70,91,.1)
+}
+.heading{text-align:center;margin-bottom:28px}
+.heading small{letter-spacing:4px;color:#7890a5;font-weight:bold}
+.heading h2{font-size:40px;margin:8px 0;color:#354d64;font-style:italic}
+.heading p{color:#687988;font-size:18px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{
+background:#f8fafb;
+border:1px solid #dce4e8;
+border-radius:14px;
+padding:24px
+}
+.icon{text-align:center;font-size:48px}
+.card h3{text-align:center;color:#405f79;font-size:24px}
+.type{text-align:center;font-size:12px;font-weight:bold;letter-spacing:2px;color:#7890a5}
+.card p{color:#71808c;line-height:1.6}
+.info{
+padding:15px;
+background:#edf4f7;
+border-radius:9px;
+color:#526777;
+line-height:1.6;
+margin-top:15px
+}
+.cost{
+display:inline-block;
+margin-top:10px;
+padding:7px 10px;
+background:#e7eef2;
+border-radius:7px;
+font-size:12px;
+font-weight:bold;
+color:#526777
+}
+.note{
+padding:20px;
+background:#edf5f8;
+border-left:5px solid #6d92aa;
+border-radius:9px;
+line-height:1.7;
+color:#526777
+}
+footer{
+margin-top:50px;padding:35px 7%;background:#263b4d;color:#d2dde5;
+display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap
+}
+footer .logo{color:white}
+@media(max-width:850px){
+nav{display:none;position:absolute;left:0;right:0;top:65px;background:white;border-radius:12px;padding:10px;flex-direction:column}
+nav.open{display:flex}
+.menu{display:block;margin-left:auto}
+.grid{grid-template-columns:1fr}
+.section{padding:30px 20px}
+.hero h1{font-size:52px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+<a class="logo" href="index.html"><span>✦</span> ANGEL PIECE</a>
+
+<nav id="nav">
+<a href="index.html">Home</a>
+<a href="shop.html">Shop</a>
+<a href="world.html">World</a>
+<a href="fruits.html">Angel Fruits</a>
+<a href="weapons.html">Weapons</a>
+<a href="guns.html">Guns</a>
+<a href="boats.html">Boats</a>
+<a href="enemies.html">Enemies</a>
+<a href="bosses.html">Bosses</a>
+<a href="sea-beasts.html">Sea Beasts</a>
+<a href="factions.html">Factions</a>
+<a href="pets.html">Pets</a>
+<a href="islands.html">Islands</a>
+<a href="species.html">Species</a>
+<a href="abilities.html" class="active">Abilities</a>
+<a href="rebirth.html">Rebirth</a>
+<a href="guide.html">Guide</a>
+<a href="store.html">Official Store</a>
+<a href="codes.html">Codes</a>
+<a href="community.html">Community</a>
+</nav>
+
+<button class="menu" onclick="toggleMenu()">☰</button>
+</header>
+
+<main>
+
+<section class="hero">
+<div class="kicker">ANGEL PIECE COMBAT</div>
+<h1>Abilities</h1>
+<p>
+Discover combat skills, Haki techniques, Species
+abilities and powerful special attacks.
+</p>
+</section>
+
+<section class="section">
+
+<div class="heading">
+<small>COMBAT</small>
+<h2>Combat Abilities</h2>
+<p>Skills available to different combat builds.</p>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">⚔️</div>
+<div class="type">COMBAT</div>
+<h3>Power Strike</h3>
+<p>
+A concentrated melee attack designed to deal
+heavy damage to a nearby target.
+</p>
+<div class="info">
+💥 Great for close-range combat.
+</div>
+<span class="cost">Energy: 20</span>
+</div>
+
+<div class="card">
+<div class="icon">💨</div>
+<div class="type">MOVEMENT</div>
+<h3>Flash Step</h3>
+<p>
+Quickly move forward, allowing you to dodge attacks
+or close the distance.
+</p>
+<div class="info">
+⚡ Useful for mobility and combos.
+</div>
+<span class="cost">Energy: 15</span>
+</div>
+
+<div class="card">
+<div class="icon">🛡️</div>
+<div class="type">DEFENSE</div>
+<h3>Iron Guard</h3>
+<p>
+Temporarily reduce incoming damage while guarding.
+</p>
+<div class="info">
+🛡️ Strong against heavy attacks.
+</div>
+<span class="cost">Energy: 25</span>
+</div>
+
+<div class="card">
+<div class="icon">🌪️</div>
+<div class="type">AREA</div>
+<h3>Sky Breaker</h3>
+<p>
+Release a powerful shockwave that damages enemies
+around the user.
+</p>
+<div class="info">
+🌪️ Useful against groups of enemies.
+</div>
+<span class="cost">Energy: 45</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="heading">
+<small>HAKI</small>
+<h2>Haki Abilities</h2>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">👁️</div>
+<div class="type">HAKI</div>
+<h3>Sense Haki</h3>
+<p>
+Improves awareness and allows the player to sense
+nearby threats.
+</p>
+<div class="info">
+✨ Can evolve after reaching major Rebirth milestones.
+</div>
+</div>
+
+<div class="card">
+<div class="icon">⚫</div>
+<div class="type">HAKI</div>
+<h3>Armor Haki</h3>
+<p>
+Strengthens attacks and provides additional defense
+against powerful enemies.
+</p>
+<div class="info">
+⚔️ Works with weapons and combat styles.
+</div>
+</div>
+
+<div class="card">
+<div class="icon">👑</div>
+<div class="type">HAKI</div>
+<h3>Dominion Haki</h3>
+<p>
+A rare advanced Haki that projects overwhelming
+pressure around the user.
+</p>
+<div class="info">
+👑 Reserved for advanced progression.
+</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="heading">
+<small>SPECIES</small>
+<h2>Species Abilities</h2>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">🐺</div>
+<div class="type">ANGELIC WOLF</div>
+<h3>Moonstep</h3>
+<p>
+A rapid celestial movement technique that allows
+the user to reposition quickly.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🐉</div>
+<div class="type">DEMONIC DRAGON</div>
+<h3>Inferno Roar</h3>
+<p>
+Release a destructive roar that damages nearby enemies.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🪽</div>
+<div class="type">CELESTIAL SERAPH</div>
+<h3>Radiant Shield</h3>
+<p>
+Create a temporary celestial shield that reduces damage.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🐍</div>
+<div class="type">SHADOW SERPENT</div>
+<h3>Shadow Slip</h3>
+<p>
+Enter a brief stealth state while moving through
+dangerous areas.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="heading">
+<small>ANGEL FRUITS</small>
+<h2>Fruit Abilities</h2>
+</div>
+
+<div class="note">
+🍎 Every Angel Fruit has its own ability set.
+As a fruit becomes stronger, additional skills,
+Awakenings and Ascensions can become available.
+<br><br>
+⚡ Fruit progression can reach Level 1000, with
+major upgrades at important milestones.
+</div>
+
+</section>
+
+</main>
+
+<footer>
+<div class="logo">✦ ANGEL PIECE</div>
+<div>
+<a href="fruits.html">Angel Fruits</a> ·
+<a href="species.html">Species</a> ·
+<a href="weapons.html">Weapons</a> ·
+<a href="rebirth.html">Rebirth</a> ·
+<a href="guide.html">Guide</a>
+</div>
+</footer>
+
+<script>
+function toggleMenu(){
+document.getElementById("nav").classList.toggle("open");
+}
+</script>
+
+</body>
+</html>
