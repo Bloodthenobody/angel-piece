@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Enemies — Angel Piece</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            color: #26384a;
+            background: linear-gradient(
+                180deg,
+                #79b0d8 0%,
+                #d9edf4 45%,
+                #f2eadc 100%
+            );
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .top {
+            position: sticky;
+            top: 14px;
+            z-index: 100;
+
+            width: min(1120px, 92%);
+            margin: 14px auto;
+
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+
+            padding: 14px 20px;
+
+            box-shadow: 0 10px 30px rgba(40,69,90,0.15);
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #39536d;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            display: inline-grid;
+            place-items: center;
+
+            width: 30px;
+            height: 30px;
+
+            border: 2px solid #86a5bd;
+            border-radius: 50%;
+        }
+
+        nav {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            flex: 1;
+        }
+
+        nav a {
+            padding: 11px 13px;
+            border-radius: 9px;
+
+            font-weight: bold;
+            color: #46586b;
+
+            transition: 0.2s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #f0f5f8;
+        }
+
+        .menu {
+            display: none;
+
+            border: 0;
+            background: transparent;
+
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        main {
+            width: min(1120px, 92%);
+            margin: auto;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 75px 20px 45px;
+        }
+
+        .hero h1 {
+            font-size: 70px;
+            margin: 10px 0;
+
+            color: #304b63;
+            font-style: italic;
+
+            text-shadow: 2px 3px rgba(255,255,255,0.55);
+        }
+
+        .hero p {
+            max-width: 750px;
+            margin: auto;
+
+            font-size: 19px;
+            line-height: 1.6;
+
+            color: #5e7181;
+        }
+
+        .kicker {
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #637d94;
+            font-size: 13px;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.95);
+
+            border-radius: 18px;
+            padding: 45px;
+            margin-bottom: 35px;
+
+            box-shadow: 0 14px 35px rgba(41,70,91,0.10);
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .heading small {
+            letter-spacing: 4px;
+            color: #7890a5;
+            font-weight: bold;
+        }
+
+        .heading h2 {
+            font-size: 42px;
+            margin: 8px 0;
+
+            color: #354d64;
+            font-style: italic;
+        }
+
+        .heading p {
+            color: #687988;
+            font-size: 18px;
+        }
+
+        .search-box {
+            max-width: 650px;
+            margin: 0 auto 25px;
+        }
+
+        .search-box input {
+            width: 100%;
+
+            padding: 15px 18px;
+
+            border: 1px solid #cfdce3;
+            border-radius: 10px;
+
+            font-size: 16px;
+            outline: none;
+
+            background: #f8fafb;
+        }
+
+        .search-box input:focus {
+            border-color: #7898ae;
+        }
+
+        .filters {
+            display: flex;
+
+            justify-content: center;
+            flex-wrap: wrap;
+
+            gap: 8px;
+            margin-bottom: 30px;
+        }
+
+        .filter {
+            border: 1px solid #cfdce3;
+
+            background: #f6f9fa;
+            color: #465d70;
+
+            padding: 10px 16px;
+
+            border-radius: 20px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .filter:hover,
+        .filter.active {
+            background: #405f79;
+            color: white;
+        }
+
+        .enemy-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .enemy-card {
+            padding: 28px;
+
+            background: #f6f9fa;
+
+            border: 1px solid #dce4e8;
+
+            border-radius: 14px;
+
+            transition: 0.2s;
+        }
+
+        .enemy-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 10px 25px rgba(40,69,90,0.12);
+        }
+
+        .enemy-icon {
+            font-size: 56px;
+            margin-bottom: 8px;
+        }
+
+        .enemy-card h3 {
+            font-size: 25px;
+            margin: 8px 0;
+        }
+
+        .enemy-card p {
+            color: #6d7c89;
+            line-height: 1.5;
+        }
+
+        .rarity {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 7px;
+
+            background: #e5edf2;
+
+            color: #526b7d;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .stats {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 8px;
+
+            margin-top: 15px;
+        }
+
+        .stat {
+            padding: 9px;
+
+            background: white;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            border: 1px solid #e1e7ea;
+        }
+
+        .stat strong {
+            display: block;
+
+            font-size: 14px;
+
+            color: #405f79;
+        }
+
+        .stat span {
+            font-size: 12px;
+
+            color: #7a8790;
+        }
+
+        .empty {
+            display: none;
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: #71808c;
+        }
+
+        .notice {
+            padding: 20px;
+
+            background: #edf5f8;
+
+            border-left: 5px solid #6d92aa;
+
+            border-radius: 8px;
+
+            line-height: 1.6;
+
+            color: #526777;
+        }
+
+        footer {
+            margin-top: 50px;
+
+            padding: 35px 7%;
+
+            background: #263b4d;
+
+            color: #d2dde5;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        footer .logo {
+            color: white;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+
+            .enemy-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 850px) {
+
+            nav {
+                display: none;
+
+                position: absolute;
+
+                left: 0;
+                right: 0;
+
+                top: 65px;
+
+                background: white;
+
+                border-radius: 12px;
+
+                padding: 10px;
+
+                flex-direction: column;
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .menu {
+                display: block;
+                margin-left: auto;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+
+            .hero h1 {
+                font-size: 55px;
+            }
+
+            .enemy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="top">
+
+    <a class="logo" href="index.html">
+        <span>✦</span>
+        ANGEL PIECE
+    </a>
+
+    <nav id="nav">
+
+        <a href="index.html">Home</a>
+
+        <a href="shop.html">Shop</a>
+
+        <a href="world.html">Island & Bosses</a>
+
+        <a href="fruits.html">Angel Fruits</a>
+
+        <a href="weapons.html">Weapons</a>
+
+        <a href="guns.html">Guns</a>
+
+        <a href="boats.html">Boats</a>
+
+        <a href="store.html">Official Store</a>
+
+        <a href="codes.html">Official Codes</a>
+
+        <a href="community.html">Community</a>
+
+    </nav>
+
+    <button class="menu" onclick="toggleMenu()">
+        ☰
+    </button>
+
+</header>
+
+
+<main>
+
+<section class="hero">
+
+    <div class="kicker">
+        ANGEL PIECE DATABASE
+    </div>
+
+    <h1>
+        Enemies
+    </h1>
+
+    <p>
+        Discover the enemies that guard the islands
+        of Angel Piece. Defeat them to earn XP,
+        Cappies and valuable rewards.
+    </p>
+
+</section>
+
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            ENEMY DATABASE
+        </small>
+
+        <h2>
+            Explore Enemies
+        </h2>
+
+        <p>
+            Search for an enemy or filter the collection
+            by difficulty.
+        </p>
+
+    </div>
+
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Search for an enemy..."
+            onkeyup="filterEnemies()">
+
+    </div>
+
+
+    <div class="filters">
+
+        <button
+            class="filter active"
+            onclick="setRarity('All', this)">
+            All
+        </button>
+
+        <button
+            class="filter"
+            onclick="setRarity('Common', this)">
+            Common
+        </button>
+
+        <button
+            class="filter"
+            onclick="setRarity('Rare', this)">
+            Rare
+        </button>
+
+        <button
+            class="filter"
+            onclick="setRarity('Elite', this)">
+            Elite
+        </button>
+
+        <button
+            class="filter"
+            onclick="setRarity('Legendary', this)">
+            Legendary
+        </button>
+
+    </div>
+
+
+    <div class="enemy-grid" id="enemyGrid">
+
+
+        <!-- COASTAL BANDIT -->
+
+        <div
+            class="enemy-card"
+            data-name="Coastal Bandit"
+            data-rarity="Common">
+
+            <div class="enemy-icon">
+                🏴‍☠️
+            </div>
+
+            <span class="rarity">
+                Common
+            </span>
+
+            <h3>
+                Coastal Bandit
+            </h3>
+
+            <p>
+                A small-time outlaw who attacks
+                travelers near the coast.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 10</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>250</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>18</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>50</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- REEF RAIDER -->
+
+        <div
+            class="enemy-card"
+            data-name="Reef Raider"
+            data-rarity="Common">
+
+            <div class="enemy-icon">
+                🦈
+            </div>
+
+            <span class="rarity">
+                Common
+            </span>
+
+            <h3>
+                Reef Raider
+            </h3>
+
+            <p>
+                A dangerous fighter who patrols
+                the shallow waters.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 75</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>900</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>42</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>180</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- IRON MARAUDER -->
+
+        <div
+            class="enemy-card"
+            data-name="Iron Marauder"
+            data-rarity="Rare">
+
+            <div class="enemy-icon">
+                🛡️
+            </div>
+
+            <span class="rarity">
+                Rare
+            </span>
+
+            <h3>
+                Iron Marauder
+            </h3>
+
+            <p>
+                A heavily armored warrior carrying
+                a reinforced shield.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 350</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>4,500</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>125</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>750</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STORM HUNTER -->
+
+        <div
+            class="enemy-card"
+            data-name="Storm Hunter"
+            data-rarity="Rare">
+
+            <div class="enemy-icon">
+                ⚡
+            </div>
+
+            <span class="rarity">
+                Rare
+            </span>
+
+            <h3>
+                Storm Hunter
+            </h3>
+
+            <p>
+                A fast warrior who uses storm energy
+                to hunt powerful adventurers.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 900</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>12,000</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>260</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>2,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CELESTIAL GUARD -->
+
+        <div
+            class="enemy-card"
+            data-name="Celestial Guard"
+            data-rarity="Elite">
+
+            <div class="enemy-icon">
+                😇
+            </div>
+
+            <span class="rarity">
+                Elite
+            </span>
+
+            <h3>
+                Celestial Guard
+            </h3>
+
+            <p>
+                An elite guardian protecting ancient
+                celestial territories.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 5,000</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>75,000</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>850</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>12,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- VOID WARDEN -->
+
+        <div
+            class="enemy-card"
+            data-name="Void Warden"
+            data-rarity="Legendary">
+
+            <div class="enemy-icon">
+                👁️
+            </div>
+
+            <span class="rarity">
+                Legendary
+            </span>
+
+            <h3>
+                Void Warden
+            </h3>
+
+            <p>
+                A mysterious warrior guarding the
+                borders of the Celestial Realm.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>Lv. 10,000</strong>
+                    <span>Level</span>
+                </div>
+
+                <div class="stat">
+                    <strong>250,000</strong>
+                    <span>HP</span>
+                </div>
+
+                <div class="stat">
+                    <strong>2,500</strong>
+                    <span>Damage</span>
+                </div>
+
+                <div class="stat">
+                    <strong>50,000</strong>
+                    <span>Cappies</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="empty" id="empty">
+        No enemies were found.
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            ENEMY SYSTEM
+        </small>
+
+        <h2>
+            Become Stronger
+        </h2>
+
+        <p>
+            Every battle helps you progress through
+            the world of Angel Piece.
+        </p>
+
+    </div>
+
+
+    <div class="notice">
+
+        ⚔️ <strong>Battle Rewards</strong>
+
+        <br><br>
+
+        Defeating enemies gives you XP and Cappies.
+
+        <br><br>
+
+        ⭐ Stronger enemies give greater rewards.
+
+        <br><br>
+
+        🌊 New islands contain stronger enemies.
+
+        <br><br>
+
+        👑 Elite enemies are much stronger than
+        normal enemies and may drop special items.
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="logo">
+        ✦ ANGEL PIECE
+    </div>
+
+    <div>
+
+        <a href="index.html">Home</a>
+        ·
+        <a href="shop.html">Shop</a>
+        ·
+        <a href="world.html">World</a>
+        ·
+        <a href="fruits.html">Angel Fruits</a>
+        ·
+        <a href="weapons.html">Weapons</a>
+        ·
+        <a href="guns.html">Guns</a>
+        ·
+        <a href="boats.html">Boats</a>
+        ·
+        <a href="store.html">Store</a>
+        ·
+        <a href="codes.html">Codes</a>
+        ·
+        <a href="community.html">Community</a>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+let selectedRarity = "All";
+
+
+function toggleMenu() {
+
+    document
+        .getElementById("nav")
+        .classList.toggle("open");
+
+}
+
+
+function setRarity(rarity, button) {
+
+    selectedRarity = rarity;
+
+    document
+        .querySelectorAll(".filter")
+        .forEach(function(btn) {
+
+            btn.classList.remove("active");
+
+        });
+
+    button.classList.add("active");
+
+    filterEnemies();
+
+}
+
+
+function filterEnemies() {
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    const enemies =
+        document
+        .querySelectorAll(".enemy-card");
+
+    let visible = 0;
+
+
+    enemies.forEach(function(enemy) {
+
+        const name =
+            enemy.dataset.name.toLowerCase();
+
+        const rarity =
+            enemy.dataset.rarity;
+
+
+        const matchesSearch =
+            name.includes(search);
+
+        const matchesRarity =
+            selectedRarity === "All" ||
+            rarity === selectedRarity;
+
+
+        if (matchesSearch && matchesRarity) {
+
+            enemy.style.display = "block";
+
+            visible++;
+
+        } else {
+
+            enemy.style.display = "none";
+
+        }
+
+    });
+
+
+    const empty =
+        document.getElementById("empty");
+
+
+    if (visible === 0) {
+
+        empty.style.display = "block";
+
+    } else {
+
+        empty.style.display = "none";
+
+    }
+
+}
+
+
+document
+    .querySelectorAll("nav a")
+    .forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function() {
+
+                document
+                    .getElementById("nav")
+                    .classList.remove("open");
+
+            }
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
