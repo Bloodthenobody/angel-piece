@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Factions — Angel Piece</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            color: #26384a;
+            background: linear-gradient(
+                180deg,
+                #79b0d8 0%,
+                #d9edf4 45%,
+                #f2eadc 100%
+            );
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .top {
+            position: sticky;
+            top: 14px;
+            z-index: 100;
+
+            width: min(1120px, 92%);
+            margin: 14px auto;
+
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+
+            padding: 14px 20px;
+
+            box-shadow: 0 10px 30px rgba(40,69,90,0.15);
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #39536d;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            display: inline-grid;
+            place-items: center;
+
+            width: 30px;
+            height: 30px;
+
+            border: 2px solid #86a5bd;
+            border-radius: 50%;
+        }
+
+        nav {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            padding: 10px 12px;
+            border-radius: 9px;
+
+            font-weight: bold;
+            color: #46586b;
+
+            transition: 0.2s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #f0f5f8;
+        }
+
+        .menu {
+            display: none;
+
+            border: 0;
+            background: transparent;
+
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        main {
+            width: min(1120px, 92%);
+            margin: auto;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 75px 20px 45px;
+        }
+
+        .hero h1 {
+            font-size: 68px;
+            margin: 10px 0;
+
+            color: #304b63;
+            font-style: italic;
+
+            text-shadow: 2px 3px rgba(255,255,255,0.55);
+        }
+
+        .hero p {
+            max-width: 800px;
+            margin: auto;
+
+            font-size: 19px;
+            line-height: 1.6;
+
+            color: #5e7181;
+        }
+
+        .kicker {
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #637d94;
+            font-size: 13px;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.95);
+
+            border-radius: 18px;
+
+            padding: 45px;
+
+            margin-bottom: 35px;
+
+            box-shadow: 0 14px 35px rgba(41,70,91,0.10);
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .heading small {
+            letter-spacing: 4px;
+            color: #7890a5;
+            font-weight: bold;
+        }
+
+        .heading h2 {
+            font-size: 42px;
+            margin: 8px 0;
+
+            color: #354d64;
+            font-style: italic;
+        }
+
+        .heading p {
+            color: #687988;
+            font-size: 18px;
+        }
+
+        .faction-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .faction-card {
+            padding: 32px;
+
+            border-radius: 16px;
+
+            background: #f6f9fa;
+
+            border: 1px solid #dce4e8;
+
+            transition: 0.25s;
+        }
+
+        .faction-card:hover {
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 12px 28px rgba(40,69,90,0.14);
+        }
+
+        .faction-icon {
+            font-size: 70px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .faction-card h3 {
+            text-align: center;
+
+            font-size: 34px;
+
+            margin: 8px 0 15px;
+
+            color: #354d64;
+        }
+
+        .faction-card p {
+            color: #687988;
+            line-height: 1.6;
+        }
+
+        .faction-label {
+            display: block;
+
+            width: fit-content;
+
+            margin: 0 auto 12px;
+
+            padding: 7px 13px;
+
+            border-radius: 20px;
+
+            background: #e5edf2;
+
+            color: #526b7d;
+
+            font-weight: bold;
+
+            font-size: 13px;
+        }
+
+        .species-grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 15px;
+
+            margin-top: 25px;
+        }
+
+        .species-card {
+            padding: 20px;
+
+            background: white;
+
+            border: 1px solid #dce4e8;
+
+            border-radius: 12px;
+        }
+
+        .species-card h4 {
+            font-size: 21px;
+            margin: 0 0 7px;
+            color: #405f79;
+        }
+
+        .species-card p {
+            margin: 0;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            color: #71808c;
+        }
+
+        .pet {
+            margin-top: 9px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #526777;
+        }
+
+        .system-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .system-card {
+            padding: 25px;
+
+            background: #f6f9fa;
+
+            border: 1px solid #dce4e8;
+
+            border-radius: 14px;
+
+            text-align: center;
+        }
+
+        .system-card .icon {
+            font-size: 42px;
+        }
+
+        .system-card h3 {
+            margin: 10px 0;
+
+            color: #405f79;
+        }
+
+        .system-card p {
+            color: #71808c;
+
+            line-height: 1.5;
+        }
+
+        .doctor-box {
+            background: #edf5f8;
+
+            border-left: 5px solid #6d92aa;
+
+            padding: 25px;
+
+            border-radius: 9px;
+
+            line-height: 1.7;
+
+            color: #526777;
+        }
+
+        .price {
+            display: inline-block;
+
+            margin-top: 10px;
+
+            padding: 8px 14px;
+
+            border-radius: 8px;
+
+            background: white;
+
+            border: 1px solid #d4e0e6;
+
+            font-weight: bold;
+
+            color: #405f79;
+        }
+
+        .chance {
+            margin-top: 15px;
+
+            padding: 15px;
+
+            background: white;
+
+            border-radius: 9px;
+
+            border: 1px solid #dce4e8;
+        }
+
+        .rank-grid {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 12px;
+
+            margin-top: 25px;
+        }
+
+        .rank {
+            padding: 17px;
+
+            text-align: center;
+
+            background: #f6f9fa;
+
+            border-radius: 10px;
+
+            border: 1px solid #dce4e8;
+        }
+
+        .rank strong {
+            display: block;
+
+            color: #405f79;
+
+            margin-bottom: 5px;
+        }
+
+        .rank span {
+            font-size: 13px;
+
+            color: #788793;
+        }
+
+        .warning {
+            margin-top: 25px;
+
+            padding: 20px;
+
+            background: #f1f3f4;
+
+            border-left: 5px solid #596d7e;
+
+            border-radius: 8px;
+
+            line-height: 1.6;
+
+            color: #526777;
+        }
+
+        footer {
+            margin-top: 50px;
+
+            padding: 35px 7%;
+
+            background: #263b4d;
+
+            color: #d2dde5;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        footer .logo {
+            color: white;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+
+            .system-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .rank-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 850px) {
+
+            nav {
+                display: none;
+
+                position: absolute;
+
+                left: 0;
+                right: 0;
+
+                top: 65px;
+
+                background: white;
+
+                border-radius: 12px;
+
+                padding: 10px;
+
+                flex-direction: column;
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .menu {
+                display: block;
+
+                margin-left: auto;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+
+            .hero h1 {
+                font-size: 52px;
+            }
+
+            .faction-grid,
+            .species-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .system-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .rank-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            footer {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="top">
+
+    <a class="logo" href="index.html">
+        <span>✦</span>
+        ANGEL PIECE
+    </a>
+
+    <nav id="nav">
+
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="world.html">Island & Bosses</a>
+        <a href="fruits.html">Angel Fruits</a>
+        <a href="weapons.html">Weapons</a>
+        <a href="guns.html">Guns</a>
+        <a href="boats.html">Boats</a>
+        <a href="enemies.html">Enemies</a>
+        <a href="bosses.html">Bosses</a>
+        <a href="sea-beasts.html">Sea Beasts</a>
+        <a href="factions.html" class="active">Factions</a>
+        <a href="pets.html">Pets</a>
+        <a href="store.html">Official Store</a>
+        <a href="codes.html">Official Codes</a>
+        <a href="community.html">Community</a>
+
+    </nav>
+
+    <button class="menu" onclick="toggleMenu()">
+        ☰
+    </button>
+
+</header>
+
+
+<main>
+
+<section class="hero">
+
+    <div class="kicker">
+        ANGEL PIECE FACTION SYSTEM
+    </div>
+
+    <h1>
+        Factions
+    </h1>
+
+    <p>
+        Choose your path. Become an Angel or join
+        the Demons and build your own power,
+        species, pets and faction rank.
+    </p>
+
+</section>
+
+
+<!-- FACTIONS -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            CHOOSE YOUR PATH
+        </small>
+
+        <h2>
+            Angel or Demon?
+        </h2>
+
+        <p>
+            Your faction determines the species,
+            abilities and pets available to you.
+        </p>
+
+    </div>
+
+
+    <div class="faction-grid">
+
+
+        <!-- ANGEL -->
+
+        <div class="faction-card">
+
+            <div class="faction-icon">
+                😇
+            </div>
+
+            <span class="faction-label">
+                LIGHT FACTION
+            </span>
+
+            <h3>
+                Angels
+            </h3>
+
+            <p>
+                Angels are guardians of the heavenly
+                realms. They focus on light, protection,
+                speed and support abilities.
+            </p>
+
+            <div class="species-grid">
+
+
+                <div class="species-card">
+
+                    <h4>
+                        🐺 Angelic Wolf
+                    </h4>
+
+                    <p>
+                        A fast celestial species built
+                        around movement and close combat.
+                    </p>
+
+                    <div class="pet">
+                        🐺 Pet: Celestial Wolf
+                    </div>
+
+                </div>
+
+
+                <div class="species-card">
+
+                    <h4>
+                        🪽 Celestial Wing
+                    </h4>
+
+                    <p>
+                        A winged species with excellent
+                        aerial mobility.
+                    </p>
+
+                    <div class="pet">
+                        🐦 Pet: Divine Bird
+                    </div>
+
+                </div>
+
+
+                <div class="species-card">
+
+                    <h4>
+                        🦌 Holy Deer
+                    </h4>
+
+                    <p>
+                        A defensive species with healing
+                        and regeneration abilities.
+                    </p>
+
+                    <div class="pet">
+                        🦌 Pet: Light Deer
+                    </div>
+
+                </div>
+
+
+                <div class="species-card">
+
+                    <h4>
+                        🐉 Divine Dragon
+                    </h4>
+
+                    <p>
+                        A powerful celestial species
+                        with high defense and damage.
+                    </p>
+
+                    <div class="pet">
+                        🐉 Pet: Divine Dragon
+                    </div>
+
+                </div>
+
+
+                <div class="species-card">
+
+                    <h4>
+                        ✨ Lightborn
+                    </h4>
+
+                    <p>
+                        A rare species connected directly
+                        to Angel energy.
+                    </p>
+
+                    <div class="pet">
+                        ✨ Pet: Light Spirit
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DEMON -->
+
+        <div class="faction-card">
+
+            <div class="faction-icon">
+                😈
+            </div>
+
+            <span class="faction-label">
+                DARK FACTION
+            </span>
+
+            <h3>
+                Demons
+            </h3>
+
+            <p>
+                Demons command dark energy and
+                destructive powers. They specialize
+                in damage, stealth and aggressive
+                abilities.
+            </p>
+
+            <div class="species-grid">
+
+
+                <div class="species-card">
+
+                    <h4>
+                        🐲 Demonic Dragon
+                    </h4>
+
+                    <p>
+                        A destructive species with
+                        powerful fire-based attacks.
+                    </p>
+
+                    <div class="pet">
+                        🐲 Pet: Infernal Dragon
+                    </div>
+
+                </div>
+
+
+                <div class="species-card">
+
+                    <h4>
+                        🐺 Shadow Wolf
+                    </h4>
+
+                    <p>
+                        A fast species that specializes
+                        in stealth and sudden attacks.
+                    </p>
+
+                    <div class="pet">
+                        🐺 Pet: Shadow Wolf
+                    </div>
+
+                </div>
+
+
+                <div class="species-card">
+
+                    <h4>
+                        🦇 Infernal Bat
+                    </h4>
+
+                    <p>
+                        An aerial species with dark
+                        energy and mobility abilities.
+                    </p>
+
+                    <div class="pet">
+                        🦇 Pet: Infernal Bat
+                    </div>
+
+                </div>
+
+
+                <div class="species-card">
+
+                    <h4>
+                        🐍 Abyss Serpent
+                    </h4>
+
+                    <p>
+                        A dangerous species using poison
+                        and abyssal energy.
+                    </p>
+
+                    <div class="pet">
+                        🐍 Pet: Abyss Serpent
+                    </div>
+
+                </div>
+
+
+                <div class="species-card">
+
+                    <h4>
+                        👹 Voidborn
+                    </h4>
+
+                    <p>
+                        A mysterious species with high
+                        resistance and dark abilities.
+                    </p>
+
+                    <div class="pet">
+                        👹 Pet: Void Beast
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FACTION SYSTEM -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            FACTION SYSTEM
+        </small>
+
+        <h2>
+            Build Your Faction Rank
+        </h2>
+
+        <p>
+            Complete quests and participate in
+            faction battles to increase your rank.
+        </p>
+
+    </div>
+
+
+    <div class="rank-grid">
+
+        <div class="rank">
+            <strong>Rank I</strong>
+            <span>Newcomer</span>
+        </div>
+
+        <div class="rank">
+            <strong>Rank II</strong>
+            <span>Warrior</span>
+        </div>
+
+        <div class="rank">
+            <strong>Rank III</strong>
+            <span>Elite</span>
+        </div>
+
+        <div class="rank">
+            <strong>Rank IV</strong>
+            <span>Champion</span>
+        </div>
+
+    </div>
+
+
+    <div class="warning">
+
+        ⚔️ <strong>Faction PvP</strong>
+
+        <br><br>
+
+        Angels and Demons can fight each other
+        in designated PvP areas.
+
+        <br><br>
+
+        Winning faction battles can reward
+        Faction XP and Cappies.
+
+        <br><br>
+
+        Your faction rank can unlock new
+        abilities, equipment and special quests.
+
+    </div>
+
+</section>
+
+
+<!-- SPECIES DOCTOR -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            SPECIES DOCTOR
+        </small>
+
+        <h2>
+            Change Your Species
+        </h2>
+
+        <p>
+            Visit the Species Doctor when you want
+            to change your current species.
+        </p>
+
+    </div>
+
+
+    <div class="doctor-box">
+
+        🏥 <strong>Species Doctor</strong>
+
+        <br><br>
+
+        The Species Doctor can change your current
+        species to another species available to
+        your faction.
+
+        <br><br>
+
+        💰 Every species change costs:
+
+        <div class="price">
+            10 Cappies
+        </div>
+
+
+        <div class="chance">
+
+            🎁 <strong>Free Pet Chance</strong>
+
+            <br><br>
+
+            When you receive a new species,
+            you have a:
+
+            <br><br>
+
+            <strong>50% chance</strong> to receive
+            a free pet associated with your new
+            species.
+
+            <br><br>
+
+            Example:
+
+            <br>
+
+            😇 Angelic Wolf
+            → 🎁 Celestial Wolf Pet
+
+            <br><br>
+
+            😈 Demonic Dragon
+            → 🎁 Infernal Dragon Pet
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FACTION FEATURES -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            FACTION FEATURES
+        </small>
+
+        <h2>
+            What Makes Your Faction Special?
+        </h2>
+
+    </div>
+
+
+    <div class="system-grid">
+
+
+        <div class="system-card">
+
+            <div class="icon">
+                🧬
+            </div>
+
+            <h3>
+                Species
+            </h3>
+
+            <p>
+                Each faction has unique species
+                with different abilities.
+            </p>
+
+        </div>
+
+
+        <div class="system-card">
+
+            <div class="icon">
+                🐾
+            </div>
+
+            <h3>
+                Faction Pets
+            </h3>
+
+            <p>
+                Species can be connected to
+                special Angel or Demon pets.
+            </p>
+
+        </div>
+
+
+        <div class="system-card">
+
+            <div class="icon">
+                ⚔️
+            </div>
+
+            <h3>
+                Faction PvP
+            </h3>
+
+            <p>
+                Fight the opposing faction and
+                earn faction rewards.
+            </p>
+
+        </div>
+
+
+        <div class="system-card">
+
+            <div class="icon">
+                🏆
+            </div>
+
+            <h3>
+                Ranks
+            </h3>
+
+            <p>
+                Increase your faction rank through
+                quests and battles.
+            </p>
+
+        </div>
+
+
+        <div class="system-card">
+
+            <div class="icon">
+                🎁
+            </div>
+
+            <h3>
+                Pet Chance
+            </h3>
+
+            <p>
+                A new species gives you a 50%
+                chance for a free matching pet.
+            </p>
+
+        </div>
+
+
+        <div class="system-card">
+
+            <div class="icon">
+                🏥
+            </div>
+
+            <h3>
+                Species Doctor
+            </h3>
+
+            <p>
+                Change your species for
+                10 Cappies.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="logo">
+        ✦ ANGEL PIECE
+    </div>
+
+    <div>
+
+        <a href="index.html">Home</a>
+        ·
+        <a href="shop.html">Shop</a>
+        ·
+        <a href="world.html">World</a>
+        ·
+        <a href="fruits.html">Angel Fruits</a>
+        ·
+        <a href="weapons.html">Weapons</a>
+        ·
+        <a href="guns.html">Guns</a>
+        ·
+        <a href="boats.html">Boats</a>
+        ·
+        <a href="enemies.html">Enemies</a>
+        ·
+        <a href="bosses.html">Bosses</a>
+        ·
+        <a href="sea-beasts.html">Sea Beasts</a>
+        ·
+        <a href="factions.html">Factions</a>
+        ·
+        <a href="pets.html">Pets</a>
+        ·
+        <a href="store.html">Store</a>
+        ·
+        <a href="codes.html">Codes</a>
+        ·
+        <a href="community.html">Community</a>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+function toggleMenu() {
+
+    document
+        .getElementById("nav")
+        .classList.toggle("open");
+
+}
+
+
+document
+    .querySelectorAll("nav a")
+    .forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function() {
+
+                document
+                    .getElementById("nav")
+                    .classList.remove("open");
+
+            }
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
