@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rebirth — Angel Piece</title>
+
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+    margin:0;
+    font-family:Georgia,"Times New Roman",serif;
+    color:#26384a;
+    background:linear-gradient(180deg,#79b0d8,#d9edf4 45%,#f2eadc);
+    min-height:100vh
+}
+a{text-decoration:none;color:inherit}
+.top{
+    position:sticky;
+    top:14px;
+    z-index:10;
+    width:min(1150px,92%);
+    margin:14px auto;
+    background:rgba(255,255,255,.96);
+    border-radius:16px;
+    padding:14px 20px;
+    box-shadow:0 10px 30px rgba(40,69,90,.15);
+    display:flex;
+    align-items:center;
+    gap:20px
+}
+.logo{font-size:22px;font-weight:bold;color:#39536d;white-space:nowrap}
+.logo span{
+    display:inline-grid;
+    place-items:center;
+    width:30px;height:30px;
+    border:2px solid #86a5bd;
+    border-radius:50%
+}
+nav{
+    display:flex;
+    gap:4px;
+    justify-content:center;
+    flex:1;
+    flex-wrap:wrap
+}
+nav a{
+    padding:9px 11px;
+    border-radius:9px;
+    font-weight:bold;
+    color:#46586b
+}
+nav a:hover,nav a.active{background:#f0f5f8}
+.menu{display:none;border:0;background:none;font-size:24px}
+main{width:min(1100px,92%);margin:auto}
+.hero{text-align:center;padding:75px 20px 45px}
+.kicker{
+    font-weight:bold;
+    letter-spacing:4px;
+    color:#637d94;
+    font-size:13px
+}
+.hero h1{
+    font-size:68px;
+    margin:10px 0;
+    color:#304b63;
+    font-style:italic
+}
+.hero p{
+    max-width:800px;
+    margin:auto;
+    font-size:19px;
+    line-height:1.6;
+    color:#5e7181
+}
+.section{
+    background:rgba(255,255,255,.95);
+    border-radius:18px;
+    padding:42px;
+    margin-bottom:35px;
+    box-shadow:0 14px 35px rgba(41,70,91,.1)
+}
+.heading{text-align:center;margin-bottom:28px}
+.heading small{
+    letter-spacing:4px;
+    color:#7890a5;
+    font-weight:bold
+}
+.heading h2{
+    font-size:40px;
+    margin:8px 0;
+    color:#354d64;
+    font-style:italic
+}
+.heading p{color:#687988;font-size:18px}
+.info{
+    padding:22px;
+    background:#edf5f8;
+    border-left:5px solid #6d92aa;
+    border-radius:9px;
+    line-height:1.7;
+    color:#526777;
+    margin-bottom:20px
+}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px
+}
+.card{
+    background:#f8fafb;
+    border:1px solid #dce4e8;
+    border-radius:13px;
+    padding:22px;
+    text-align:center
+}
+.icon{font-size:42px}
+.card h3{color:#405f79}
+.card p{color:#71808c;line-height:1.5}
+.number{
+    display:inline-grid;
+    place-items:center;
+    width:42px;height:42px;
+    border-radius:50%;
+    background:#e6eef2;
+    color:#405f79;
+    font-weight:bold
+}
+.table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px
+}
+.table th,.table td{
+    padding:14px;
+    border-bottom:1px solid #dce4e8;
+    text-align:left
+}
+.table th{background:#eef5f8;color:#405f79}
+.highlight{
+    padding:18px;
+    background:#f2f6f8;
+    border-radius:10px;
+    margin-top:15px;
+    color:#526777;
+    line-height:1.6
+}
+footer{
+    margin-top:50px;
+    padding:35px 7%;
+    background:#263b4d;
+    color:#d2dde5;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap
+}
+footer .logo{color:white}
+@media(max-width:850px){
+    nav{
+        display:none;
+        position:absolute;
+        left:0;right:0;top:65px;
+        background:white;
+        border-radius:12px;
+        padding:10px;
+        flex-direction:column
+    }
+    nav.open{display:flex}
+    .menu{display:block;margin-left:auto}
+    .grid{grid-template-columns:1fr}
+    .section{padding:30px 20px}
+    .hero h1{font-size:52px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+<a class="logo" href="index.html"><span>✦</span> ANGEL PIECE</a>
+
+<nav id="nav">
+<a href="index.html">Home</a>
+<a href="shop.html">Shop</a>
+<a href="world.html">World</a>
+<a href="fruits.html">Angel Fruits</a>
+<a href="weapons.html">Weapons</a>
+<a href="guns.html">Guns</a>
+<a href="boats.html">Boats</a>
+<a href="enemies.html">Enemies</a>
+<a href="bosses.html">Bosses</a>
+<a href="sea-beasts.html">Sea Beasts</a>
+<a href="factions.html">Factions</a>
+<a href="pets.html">Pets</a>
+<a href="islands.html">Islands</a>
+<a href="species.html">Species</a>
+<a href="abilities.html">Abilities</a>
+<a href="rebirth.html" class="active">Rebirth</a>
+<a href="guide.html">Guide</a>
+<a href="store.html">Official Store</a>
+<a href="codes.html">Codes</a>
+<a href="community.html">Community</a>
+</nav>
+
+<button class="menu" onclick="toggleMenu()">☰</button>
+</header>
+
+<main>
+
+<section class="hero">
+<div class="kicker">ANGEL PIECE ENDGAME</div>
+<h1>Rebirth</h1>
+<p>
+Reach the limits of your current journey, enter the
+Rebirth system and return stronger than before.
+</p>
+</section>
+
+<section class="section">
+
+<div class="heading">
+<small>THE SYSTEM</small>
+<h2>How Rebirth Works</h2>
+<p>Rebirth begins the next chapter of your adventure.</p>
+</div>
+
+<div class="info">
+♻️ <strong>Rebirth is an endgame progression system.</strong>
+<br><br>
+When you reach the required progression, you can
+reset part of your character's progress in exchange
+for permanent bonuses and access to stronger content.
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">1️⃣</div>
+<h3>Reach the Requirement</h3>
+<p>
+Become powerful enough to unlock your first Rebirth.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">2️⃣</div>
+<h3>Enter the Temple</h3>
+<p>
+Visit the Rebirth Temple in the Celestial Realm.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">3️⃣</div>
+<h3>Choose Rebirth</h3>
+<p>
+Confirm your decision and begin a new progression cycle.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="heading">
+<small>PROGRESSION</small>
+<h2>What Changes?</h2>
+</div>
+
+<table class="table">
+<tr>
+<th>Feature</th>
+<th>After Rebirth</th>
+</tr>
+<tr>
+<td>Level</td>
+<td>Returns to the starting progression</td>
+</tr>
+<tr>
+<td>Rebirth Count</td>
+<td>+1 permanently</td>
+</tr>
+<tr>
+<td>Rebirth Power</td>
+<td>Increases</td>
+</tr>
+<tr>
+<td>Permanent Unlocks</td>
+<td>Remain unlocked</td>
+</tr>
+<tr>
+<td>Species</td>
+<td>Kept unless changed manually</td>
+</tr>
+<tr>
+<td>Pets</td>
+<td>Kept</td>
+</tr>
+<tr>
+<td>Discovered Areas</td>
+<td>Kept</td>
+</tr>
+</table>
+
+<div class="highlight">
+⚡ The purpose of Rebirth is not simply to reset your
+character. It allows you to build a stronger character
+over multiple cycles.
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="heading">
+<small>REBIRTH LEVELS</small>
+<h2>Rebirth Milestones</h2>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="number">1</div>
+<h3>First Rebirth</h3>
+<p>Unlock the basic Rebirth bonus.</p>
+</div>
+
+<div class="card">
+<div class="number">5</div>
+<h3>Awakened Progress</h3>
+<p>Unlock stronger progression bonuses.</p>
+</div>
+
+<div class="card">
+<div class="number">10</div>
+<h3>Haki Evolution</h3>
+<p>Your Haki can enter its evolved stage.</p>
+</div>
+
+<div class="card">
+<div class="number">25</div>
+<h3>Celestial Power</h3>
+<p>Unlock advanced Celestial upgrades.</p>
+</div>
+
+<div class="card">
+<div class="number">50</div>
+<h3>Mythic Progression</h3>
+<p>Unlock powerful late-game rewards.</p>
+</div>
+
+<div class="card">
+<div class="number">∞</div>
+<h3>Endless Journey</h3>
+<p>Continue building your Rebirth power.</p>
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+<div class="logo">✦ ANGEL PIECE</div>
+<div>
+<a href="index.html">Home</a> ·
+<a href="guide.html">Guide</a> ·
+<a href="species.html">Species</a> ·
+<a href="abilities.html">Abilities</a> ·
+<a href="rebirth.html">Rebirth</a> ·
+<a href="community.html">Community</a>
+</div>
+</footer>
+
+<script>
+function toggleMenu(){
+document.getElementById("nav").classList.toggle("open");
+}
+</script>
+
+</body>
+</html>
