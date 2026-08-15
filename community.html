@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Community — Angel Piece</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            color: #26384a;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #79b0d8 0%,
+                    #d9edf4 45%,
+                    #f2eadc 100%
+                );
+
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .top {
+            position: sticky;
+            top: 14px;
+            z-index: 100;
+
+            width: min(1120px, 92%);
+            margin: 14px auto;
+
+            background: rgba(255,255,255,0.95);
+
+            border-radius: 16px;
+
+            padding: 14px 20px;
+
+            box-shadow:
+                0 10px 30px rgba(40,69,90,0.15);
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #39536d;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            display: inline-grid;
+            place-items: center;
+
+            width: 30px;
+            height: 30px;
+
+            border: 2px solid #86a5bd;
+            border-radius: 50%;
+        }
+
+        nav {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            flex: 1;
+        }
+
+        nav a {
+            padding: 11px 13px;
+            border-radius: 9px;
+
+            font-weight: bold;
+            color: #46586b;
+
+            transition: 0.2s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #f0f5f8;
+        }
+
+        .menu {
+            display: none;
+
+            border: 0;
+            background: transparent;
+
+            font-size: 24px;
+
+            cursor: pointer;
+        }
+
+        main {
+            width: min(1050px, 92%);
+            margin: auto;
+        }
+
+        .hero {
+            text-align: center;
+
+            padding: 75px 20px 45px;
+        }
+
+        .hero h1 {
+            font-size: 70px;
+
+            margin: 10px 0;
+
+            color: #304b63;
+
+            font-style: italic;
+
+            text-shadow:
+                2px 3px rgba(255,255,255,0.55);
+        }
+
+        .hero p {
+            max-width: 750px;
+
+            margin: auto;
+
+            font-size: 19px;
+
+            line-height: 1.6;
+
+            color: #5e7181;
+        }
+
+        .kicker {
+            font-weight: bold;
+
+            letter-spacing: 4px;
+
+            color: #637d94;
+
+            font-size: 13px;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.95);
+
+            border-radius: 18px;
+
+            padding: 45px;
+
+            margin-bottom: 35px;
+
+            box-shadow:
+                0 14px 35px rgba(41,70,91,0.10);
+        }
+
+        .heading {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+        .heading small {
+            letter-spacing: 4px;
+
+            color: #7890a5;
+
+            font-weight: bold;
+        }
+
+        .heading h2 {
+            font-size: 42px;
+
+            margin: 8px 0;
+
+            color: #354d64;
+
+            font-style: italic;
+        }
+
+        .heading p {
+            color: #687988;
+
+            font-size: 18px;
+        }
+
+        .grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+        .card {
+            padding: 30px;
+
+            background: #f6f9fa;
+
+            border: 1px solid #dce4e8;
+
+            border-radius: 13px;
+
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 10px 25px rgba(40,69,90,0.10);
+        }
+
+        .icon {
+            font-size: 50px;
+        }
+
+        .card h3 {
+            font-size: 25px;
+
+            margin: 10px 0;
+        }
+
+        .card p {
+            color: #6d7c89;
+
+            line-height: 1.6;
+        }
+
+        .owner {
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f9f5e9,
+                    #eef5f8
+                );
+
+            border: 2px solid #d9cba9;
+        }
+
+        .owner .crown {
+            font-size: 70px;
+        }
+
+        .owner h2 {
+            font-size: 34px;
+
+            margin: 10px 0;
+
+            color: #354d64;
+        }
+
+        .role {
+            display: inline-block;
+
+            padding: 7px 14px;
+
+            background: #e6dcc5;
+
+            border-radius: 20px;
+
+            font-weight: bold;
+
+            color: #5d604f;
+        }
+
+        .discord {
+            text-align: center;
+
+            padding: 35px;
+
+            background: #edf5f8;
+
+            border-radius: 14px;
+        }
+
+        .discord-icon {
+            font-size: 60px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 13px 22px;
+
+            background: #405f79;
+
+            color: white;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #314e66;
+
+            transform: translateY(-2px);
+        }
+
+        footer {
+            margin-top: 50px;
+
+            padding: 35px 7%;
+
+            background: #263b4d;
+
+            color: #d2dde5;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        footer .logo {
+            color: white;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 850px) {
+
+            nav {
+                display: none;
+
+                position: absolute;
+
+                left: 0;
+                right: 0;
+
+                top: 65px;
+
+                background: white;
+
+                border-radius: 12px;
+
+                padding: 10px;
+
+                flex-direction: column;
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .menu {
+                display: block;
+
+                margin-left: auto;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+
+            .hero h1 {
+                font-size: 55px;
+            }
+
+            footer {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="top">
+
+    <a class="logo" href="index.html">
+        <span>✦</span>
+        ANGEL PIECE
+    </a>
+
+    <nav id="nav">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+        <a href="world.html">
+            Island & Bosses
+        </a>
+
+        <a href="store.html">
+            Official Store
+        </a>
+
+        <a href="codes.html">
+            Official Codes
+        </a>
+
+        <a class="active" href="community.html">
+            Community
+        </a>
+
+    </nav>
+
+    <button
+        class="menu"
+        onclick="toggleMenu()">
+
+        ☰
+
+    </button>
+
+</header>
+
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="kicker">
+        ANGEL PIECE COMMUNITY
+    </div>
+
+    <h1>
+        Community
+    </h1>
+
+    <p>
+        Meet the people behind Angel Piece,
+        join the community and help us build
+        the future of the game.
+    </p>
+
+</section>
+
+
+<!-- OWNER -->
+
+<section class="section">
+
+    <div class="owner">
+
+        <div class="crown">
+            👑
+        </div>
+
+        <span class="role">
+            OFFICIAL OWNER
+        </span>
+
+        <h2>
+            Kyano
+        </h2>
+
+        <p>
+            Founder and Official Owner of Angel Piece.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- TEAM -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            ANGEL PIECE TEAM
+        </small>
+
+        <h2>
+            Our Team
+        </h2>
+
+        <p>
+            The people helping create and test Angel Piece.
+        </p>
+
+    </div>
+
+
+    <div class="grid">
+
+
+        <!-- CREATORS -->
+
+        <div class="card">
+
+            <div class="icon">
+                🛠️
+            </div>
+
+            <h3>
+                Creators
+            </h3>
+
+            <p>
+
+                <strong>
+                    Kyano
+                </strong>
+
+                — Official Owner
+
+                <br><br>
+
+                <strong>
+                    Stef
+                </strong>
+
+                — Creator
+
+                <br><br>
+
+                <strong>
+                    Stanley
+                </strong>
+
+                — Creator
+
+            </p>
+
+        </div>
+
+
+        <!-- PLAYTESTERS -->
+
+        <div class="card">
+
+            <div class="icon">
+                🎮
+            </div>
+
+            <h3>
+                Playtesters
+            </h3>
+
+            <p>
+
+                <strong>
+                    Tayyaib
+                </strong>
+
+                <br><br>
+
+                <strong>
+                    Jailey
+                </strong>
+
+                <br><br>
+
+                Our playtesters help discover bugs,
+                test new features and give feedback
+                during development.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DISCORD -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            JOIN US
+        </small>
+
+        <h2>
+            Official Community
+        </h2>
+
+        <p>
+            Talk with other players and follow
+            Angel Piece development.
+        </p>
+
+    </div>
+
+
+    <div class="discord">
+
+        <div class="discord-icon">
+            💬
+        </div>
+
+        <h3>
+            Angel Piece Discord
+        </h3>
+
+        <p>
+            Join the official community,
+            meet other players and get updates.
+        </p>
+
+        <a
+            class="btn"
+            href="https://discord.com/channels/1521849925040869507/1521862002916462725"
+            target="_blank"
+            rel="noopener noreferrer">
+
+            JOIN DISCORD
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- FRIENDS -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            OUR FRIENDS
+        </small>
+
+        <h2>
+            Our Friends
+        </h2>
+
+        <p>
+            Creators and playtesters who are part
+            of the Angel Piece journey.
+        </p>
+
+    </div>
+
+
+    <div class="grid">
+
+
+        <div class="card">
+
+            <div class="icon">
+                👥
+            </div>
+
+            <h3>
+                Creators
+            </h3>
+
+            <p>
+                Kyano · Stef · Stanley
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">
+                🧪
+            </div>
+
+            <h3>
+                Playtesters
+            </h3>
+
+            <p>
+                Tayyaib · Jailey
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="logo">
+        ✦ ANGEL PIECE
+    </div>
+
+    <div>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        ·
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+        ·
+
+        <a href="world.html">
+            World
+        </a>
+
+        ·
+
+        <a href="store.html">
+            Official Store
+        </a>
+
+        ·
+
+        <a href="codes.html">
+            Codes
+        </a>
+
+        ·
+
+        <a href="community.html">
+            Community
+        </a>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+function toggleMenu() {
+
+    document
+        .getElementById("nav")
+        .classList.toggle("open");
+
+}
+
+
+document
+    .querySelectorAll("nav a")
+    .forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function() {
+
+                document
+                    .getElementById("nav")
+                    .classList.remove("open");
+
+            }
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
