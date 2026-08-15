@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shop — Angel Piece</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            color: #26384a;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #79b0d8 0%,
+                    #d9edf4 45%,
+                    #f2eadc 100%
+                );
+
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* NAVIGATION */
+
+        .top {
+            position: sticky;
+            top: 14px;
+            z-index: 100;
+
+            width: min(1120px, 92%);
+            margin: 14px auto;
+
+            background: rgba(255,255,255,0.95);
+
+            border-radius: 16px;
+
+            padding: 14px 20px;
+
+            box-shadow:
+                0 10px 30px rgba(40,69,90,0.15);
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #39536d;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            display: inline-grid;
+            place-items: center;
+
+            width: 30px;
+            height: 30px;
+
+            border: 2px solid #86a5bd;
+            border-radius: 50%;
+        }
+
+        nav {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            flex: 1;
+        }
+
+        nav a {
+            padding: 11px 13px;
+            border-radius: 9px;
+
+            font-weight: bold;
+            color: #46586b;
+
+            transition: 0.2s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #f0f5f8;
+        }
+
+        .menu {
+            display: none;
+
+            border: 0;
+            background: transparent;
+
+            font-size: 24px;
+
+            cursor: pointer;
+        }
+
+        /* MAIN */
+
+        main {
+            width: min(1120px, 92%);
+            margin: auto;
+        }
+
+        /* PAGE HERO */
+
+        .pagehero {
+            text-align: center;
+
+            padding: 75px 20px 45px;
+        }
+
+        .pagehero h1 {
+            font-size: 75px;
+
+            margin: 10px 0;
+
+            color: #304b63;
+
+            font-style: italic;
+
+            text-shadow:
+                2px 3px rgba(255,255,255,0.55);
+        }
+
+        .pagehero p {
+            font-size: 19px;
+
+            color: #5e7181;
+
+            max-width: 700px;
+
+            margin: auto;
+
+            line-height: 1.6;
+        }
+
+        .kicker {
+            font-weight: bold;
+
+            letter-spacing: 4px;
+
+            color: #637d94;
+
+            font-size: 13px;
+        }
+
+        /* SECTIONS */
+
+        .section {
+            background: rgba(255,255,255,0.94);
+
+            border-radius: 18px;
+
+            padding: 50px;
+
+            margin-bottom: 35px;
+
+            box-shadow:
+                0 14px 35px rgba(41,70,91,0.10);
+        }
+
+        .cream {
+            background: rgba(250,247,239,0.96);
+        }
+
+        .heading {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+        .heading small {
+            letter-spacing: 4px;
+
+            color: #7890a5;
+
+            font-weight: bold;
+        }
+
+        .heading h2 {
+            font-size: 45px;
+
+            margin: 8px 0;
+
+            color: #354d64;
+
+            font-style: italic;
+        }
+
+        .heading p {
+            color: #687988;
+
+            font-size: 18px;
+        }
+
+        /* FRUIT LIST */
+
+        .list {
+            display: grid;
+
+            gap: 14px;
+        }
+
+        .row {
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            background: white;
+
+            border: 1px solid #ddd8ca;
+
+            border-radius: 12px;
+
+            padding: 18px;
+
+            transition: 0.2s;
+        }
+
+        .row:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(40,69,90,0.10);
+        }
+
+        .row .icon {
+            font-size: 42px;
+
+            width: 60px;
+
+            text-align: center;
+        }
+
+        .row h3 {
+            margin: 0 0 5px;
+
+            font-size: 24px;
+        }
+
+        .row p {
+            margin: 0;
+
+            color: #778592;
+        }
+
+        .price {
+            margin-left: auto;
+
+            font-weight: bold;
+
+            color: #5b6f80;
+
+            text-align: right;
+        }
+
+        /* CARDS */
+
+        .grid3 {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 16px;
+        }
+
+        .card {
+            padding: 28px;
+
+            background: #f6f9fa;
+
+            border: 1px solid #dce4e8;
+
+            border-radius: 13px;
+
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 10px 25px rgba(40,69,90,0.10);
+        }
+
+        .card .icon {
+            font-size: 52px;
+        }
+
+        .card h3 {
+            font-size: 25px;
+
+            margin: 10px 0;
+        }
+
+        .card p {
+            color: #6d7c89;
+
+            line-height: 1.5;
+        }
+
+        /* BUTTON */
+
+        .btn {
+            display: inline-block;
+
+            margin-top: 12px;
+
+            padding: 10px 16px;
+
+            background: #405f79;
+
+            color: white;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            border: none;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #314e66;
+
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 50px;
+
+            padding: 35px 7%;
+
+            background: #263b4d;
+
+            color: #d2dde5;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        footer .logo {
+            color: white;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 850px) {
+
+            nav {
+                display: none;
+
+                position: absolute;
+
+                left: 0;
+                right: 0;
+
+                top: 65px;
+
+                background: white;
+
+                border-radius: 12px;
+
+                padding: 10px;
+
+                flex-direction: column;
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .menu {
+                display: block;
+
+                margin-left: auto;
+            }
+
+            .grid3 {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 35px 22px;
+            }
+
+            .pagehero h1 {
+                font-size: 55px;
+            }
+
+            .row {
+                align-items: flex-start;
+            }
+
+            .price {
+                margin-left: auto;
+            }
+
+            footer {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<header class="top">
+
+    <a class="logo" href="index.html">
+        <span>✦</span>
+        ANGEL PIECE
+    </a>
+
+    <nav id="nav">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a class="active" href="shop.html">
+            Shop
+        </a>
+
+        <a href="world.html">
+            Island & Bosses
+        </a>
+
+        <a href="store.html">
+            Official Store
+        </a>
+
+        <a href="codes.html">
+            Official Codes
+        </a>
+
+        <a href="community.html">
+            Community
+        </a>
+
+    </nav>
+
+    <button
+        class="menu"
+        onclick="toggleMenu()">
+        ☰
+    </button>
+
+</header>
+
+
+<main>
+
+<!-- =========================
+     PAGE TITLE
+========================= -->
+
+<section class="pagehero">
+
+    <div class="kicker">
+        ANGEL PIECE
+    </div>
+
+    <h1>
+        Shop
+    </h1>
+
+    <p>
+        Browse Angel Fruits, weapons and ships.
+        All prices are shown in Cappies.
+    </p>
+
+</section>
+
+
+<!-- =========================
+     ANGEL FRUITS
+========================= -->
+
+<section class="section" id="fruits">
+
+    <div class="heading">
+
+        <small>
+            ANGEL FRUITS
+        </small>
+
+        <h2>
+            Choose Your Power
+        </h2>
+
+        <p>
+            Discover powerful Angel Fruits
+            and their unique abilities.
+        </p>
+
+    </div>
+
+
+    <div class="list">
+
+
+        <!-- FLAME -->
+
+        <div class="row">
+
+            <div class="icon">
+                🔥
+            </div>
+
+            <div>
+
+                <h3>
+                    Angel Flame
+                </h3>
+
+                <p>
+                    Common · Fire-based powers
+                </p>
+
+            </div>
+
+            <div class="price">
+
+                2,500 Cappies
+
+                <br>
+
+                <button
+                    class="btn"
+                    onclick="showItem('Angel Flame')">
+
+                    VIEW
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ICE -->
+
+        <div class="row">
+
+            <div class="icon">
+                ❄️
+            </div>
+
+            <div>
+
+                <h3>
+                    Angel Ice
+                </h3>
+
+                <p>
+                    Rare · Frost abilities
+                </p>
+
+            </div>
+
+            <div class="price">
+
+                7,500 Cappies
+
+                <br>
+
+                <button
+                    class="btn"
+                    onclick="showItem('Angel Ice')">
+
+                    VIEW
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- LIGHT -->
+
+        <div class="row">
+
+            <div class="icon">
+                ✨
+            </div>
+
+            <div>
+
+                <h3>
+                    Angel Light
+                </h3>
+
+                <p>
+                    Epic · Radiant abilities
+                </p>
+
+            </div>
+
+            <div class="price">
+
+                25,000 Cappies
+
+                <br>
+
+                <button
+                    class="btn"
+                    onclick="showItem('Angel Light')">
+
+                    VIEW
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- DRAGON -->
+
+        <div class="row">
+
+            <div class="icon">
+                🐉
+            </div>
+
+            <div>
+
+                <h3>
+                    Angel Dragon
+                </h3>
+
+                <p>
+                    Legendary · Dragon abilities
+                </p>
+
+            </div>
+
+            <div class="price">
+
+                120,000 Cappies
+
+                <br>
+
+                <button
+                    class="btn"
+                    onclick="showItem('Angel Dragon')">
+
+                    VIEW
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- PHOENIX -->
+
+        <div class="row">
+
+            <div class="icon">
+                🦅
+            </div>
+
+            <div>
+
+                <h3>
+                    Angel Phoenix
+                </h3>
+
+                <p>
+                    Mythical · Phoenix abilities
+                </p>
+
+            </div>
+
+            <div class="price">
+
+                250,000 Cappies
+
+                <br>
+
+                <button
+                    class="btn"
+                    onclick="showItem('Angel Phoenix')">
+
+                    VIEW
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     WEAPONS
+========================= -->
+
+<section class="section cream">
+
+    <div class="heading">
+
+        <small>
+            WEAPON SHOP
+        </small>
+
+        <h2>
+            Weapons
+        </h2>
+
+        <p>
+            Equipment for adventurers and warriors.
+        </p>
+
+    </div>
+
+
+    <div class="grid3">
+
+
+        <div class="card">
+
+            <div class="icon">
+                ⚔️
+            </div>
+
+            <h3>
+                Starsteel Blade
+            </h3>
+
+            <p>
+                A rare blade forged from
+                celestial metal.
+            </p>
+
+            <b>
+                15,000 Cappies
+            </b>
+
+            <br>
+
+            <button
+                class="btn"
+                onclick="showItem('Starsteel Blade')">
+
+                VIEW
+
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">
+                🗡️
+            </div>
+
+            <h3>
+                Moonfang
+            </h3>
+
+            <p>
+                An epic sword carrying
+                the power of moonlight.
+            </p>
+
+            <b>
+                50,000 Cappies
+            </b>
+
+            <br>
+
+            <button
+                class="btn"
+                onclick="showItem('Moonfang')">
+
+                VIEW
+
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">
+                ✨
+            </div>
+
+            <h3>
+                Voidbreaker
+            </h3>
+
+            <p>
+                A mythical weapon created
+                to break celestial barriers.
+            </p>
+
+            <b>
+                1,000,000 Cappies
+            </b>
+
+            <br>
+
+            <button
+                class="btn"
+                onclick="showItem('Voidbreaker')">
+
+                VIEW
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SHIPS
+========================= -->
+
+<section class="section">
+
+    <div class="heading">
+
+        <small>
+            SHIP SHOP
+        </small>
+
+        <h2>
+            Ships
+        </h2>
+
+        <p>
+            Choose your ship and explore the world.
+        </p>
+
+    </div>
+
+
+    <div class="grid3">
+
+
+        <div class="card">
+
+            <div class="icon">
+                ⛵
+            </div>
+
+            <h3>
+                Sunrunner
+            </h3>
+
+            <p>
+                A fast starter ship
+                for new adventurers.
+            </p>
+
+            <b>
+                5,000 Cappies
+            </b>
+
+            <br>
+
+            <button
+                class="btn"
+                onclick="showItem('Sunrunner')">
+
+                VIEW
+
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">
+                🚤
+            </div>
+
+            <h3>
+                Stormrider
+            </h3>
+
+            <p>
+                Built for dangerous
+                ocean journeys.
+            </p>
+
+            <b>
+                75,000 Cappies
+            </b>
+
+            <br>
+
+            <button
+                class="btn"
+                onclick="showItem('Stormrider')">
+
+                VIEW
+
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">
+                🚢
+            </div>
+
+            <h3>
+                Celestial Ark
+            </h3>
+
+            <p>
+                A legendary ship made
+                for the highest zones.
+            </p>
+
+            <b>
+                2,500,000 Cappies
+            </b>
+
+            <br>
+
+            <button
+                class="btn"
+                onclick="showItem('Celestial Ark')">
+
+                VIEW
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="logo">
+        ✦ ANGEL PIECE
+    </div>
+
+    <div>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        ·
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+        ·
+
+        <a href="world.html">
+            World
+        </a>
+
+        ·
+
+        <a href="store.html">
+            Official Store
+        </a>
+
+        ·
+
+        <a href="codes.html">
+            Codes
+        </a>
+
+        ·
+
+        <a href="community.html">
+            Community
+        </a>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+function toggleMenu() {
+
+    document
+        .getElementById("nav")
+        .classList.toggle("open");
+
+}
+
+
+function showItem(item) {
+
+    alert(
+        item +
+        "\\n\\nThis item is part of the Angel Piece shop.\\n\\nPurchase system coming soon!"
+    );
+
+}
+
+
+document
+    .querySelectorAll("nav a")
+    .forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function() {
+
+                document
+                    .getElementById("nav")
+                    .classList.remove("open");
+
+            }
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
